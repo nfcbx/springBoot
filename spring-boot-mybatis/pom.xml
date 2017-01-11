@@ -2,11 +2,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.3golden.pa</groupId>
-	<artifactId>hainan</artifactId>
+	<groupId>com.zsx</groupId>
+	<artifactId>spring-boot-mybatis</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1</version>
-	<name>3golden Maven Webapp</name>
+	<name>zsx Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -19,9 +19,6 @@
         <pagehelper.version>4.1.6</pagehelper.version>
         <fastjson.version>1.2.16</fastjson.version>
 		<druid.version>1.0.25</druid.version>
-		<!-- <ehcache.version>2.10.3</ehcache.version> -->
-		<apache.poi.version>3.14</apache.poi.version>
-		<activiti.version>5.21.0</activiti.version>
 	</properties>
 
 	<parent>
@@ -75,13 +72,6 @@
 		    <artifactId>ehcache</artifactId>
 		</dependency>
 		
-		<!-- 集成工作流 -->
-		<dependency>
-    		<groupId>org.activiti</groupId>
-    		<artifactId>activiti-spring-boot-starter-basic</artifactId>
-			<version>${activiti.version}</version>
-		</dependency>
-		
         <!-- Spring Boot JDBC  与数据库操作相关的依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -130,12 +120,6 @@
 			<version>${druid.version}</version>
 		</dependency>
 
-		<!-- 导出excel -->
-		<dependency>
-		    <groupId>org.apache.poi</groupId>
-		    <artifactId>poi</artifactId>
-		    <version>${apache.poi.version}</version>
-		</dependency>
 
 		<!-- Junit 单元测试 -->
 		<dependency>
