@@ -11,14 +11,20 @@ public class UtilTest {
 		int availableProcessors = Runtime.getRuntime().availableProcessors();
 		System.out.println(availableProcessors);
 		
-		ExecutorService executorService = Executors.newFixedThreadPool(4);
+		ExecutorService executorService = Executors.newFixedThreadPool(availableProcessors);
 		
 		
-		for (int i = 0; i < 100; i++) {
-//			System.out.println(i);
-			executorService.execute(new Task1(i));
+		for (int i = 0; i < 10; i++) {
+			System.out.println(i);
+//			executorService.execute(new Task1(i));
+			
+			executorService.execute(new Task2());
+			
+//			Task2 task2 = new Task2();
+//			task2.run();
 		}
 		
+		System.out.println("准备关闭线程池");
 		executorService.shutdown();
 		
 //		executorService.execute(new Runnable() {

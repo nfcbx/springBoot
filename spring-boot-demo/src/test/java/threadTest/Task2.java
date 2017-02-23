@@ -1,13 +1,21 @@
 package threadTest;
 
-import java.util.concurrent.Callable;
+import java.util.Date;
 
-public class Task2 implements Callable {
+public class Task2 implements Runnable {
 
 	@Override
-	public Object call() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public void run() {
+		try {
+			Thread.sleep(1000 * 5);
+			System.out.println(new Date().toString());
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	
+		
 	}
+
+	
 
 }
