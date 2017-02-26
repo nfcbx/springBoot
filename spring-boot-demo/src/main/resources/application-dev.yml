@@ -1,3 +1,37 @@
 server:
     port: 8080
     context-path: /boot-dev
+    
+
+    
+########################################################  
+###THYMELEAF (ThymeleafAutoConfiguration)  
+########################################################  
+#spring.thymeleaf.prefix=classpath:/templates/  
+#spring.thymeleaf.suffix=.html  
+#spring.thymeleaf.mode=HTML5  
+#spring.thymeleaf.encoding=UTF-8  
+# ;charset=<encoding> is added  
+#spring.thymeleaf.content-type=text/html  
+# set to false for hot refresh  
+  
+spring: 
+    thymeleaf: 
+        cache: false
+
+
+    
+    
+    
+    
+    
+logging: 
+    path: /log/spring-boot-demo.log
+    level: 
+        org:
+            springframework: 
+                web: DEBUG
+            hibernate: ERROR
+        com: 
+            zsx: 
+                util: DEBUG
