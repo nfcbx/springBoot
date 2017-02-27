@@ -16,7 +16,7 @@ public class TimeTask {
 	 * 一种是我们常用的cron="* /6 * * * * ?",
 	 * 一种是 fixedRate = 6000，两种都表示每隔六秒打印一下内容。
 	 */
-	@Scheduled(cron = "0/3 * * * * ?")
+	@Scheduled(cron = "0/60 * * * * ?")
 	public void name() {
 //		TestServiceImpl bean = (TestServiceImpl) SpringUtil.getBean("testService");
 		

@@ -8,7 +8,7 @@
 	<name>spring-boot-demo Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 
-	
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -17,47 +17,57 @@
 
 
 	<dependencies>
-		
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		
+
 		<!-- 使用thymeleaf模板引擎 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
-		
-		
-	
+
+
+
 		<!-- 只需引入spring-boot-devtools 即可实现热部署 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<optional>true</optional>
 		</dependency>
-		
-		
+
+
 		<dependency>
 			<groupId>com.sun.mail</groupId>
 			<artifactId>javax.mail</artifactId>
 			<version>1.5.5</version>
 		</dependency>
-	
+
+
+		<!-- Spring Boot Junit 单元测试 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+<!-- 
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
+ -->		
 	</dependencies>
 	<build>
 		<finalName>spring-boot-demo</finalName>
-		
-		
+
+
 		<plugins>
-			<!-- 搭配上面的 spring-boot-devtools ，可以实现开发环境实时调试-->
+			<!-- 搭配上面的 spring-boot-devtools ，可以实现开发环境实时调试 -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -65,7 +75,7 @@
 					<fork>true</fork>
 				</configuration>
 			</plugin>
-		
+
 		</plugins>
 	</build>
 </project>
