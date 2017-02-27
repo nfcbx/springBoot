@@ -32,6 +32,14 @@
         			<td th:text="${obj.c}"></td>
         		</tr>
         	</table>
+        	
+        	另一种写法：
+        	<div th:object="${obj}" >
+        		<strong th:text="*{a}"></strong>
+        		<strong th:text="*{b}"></strong>
+        		<strong th:text="*{c}"></strong>
+        	</div>
+        	
         </div>
         
         <div>
