@@ -10,7 +10,7 @@ import com.zsx.service.TestService;
 public class TestServiceImpl implements TestService {
 
 	@Override
-	public void asdf() {
+	public void gettime() {
 		System.out.println(Calendar.getInstance().getTime());
 		
 	}

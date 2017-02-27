@@ -28,7 +28,7 @@ public class TimeTask {
 		
 		TestService bean = SpringUtil.getBean("testService", TestServiceImpl.class);
 		
-		bean.asdf();
+		bean.gettime();
 		
 	}
 	

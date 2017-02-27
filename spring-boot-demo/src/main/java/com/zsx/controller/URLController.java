@@ -37,9 +37,12 @@ public class URLController {
 		
 		map.put("obj", map2);
 		
+		
+		
 //		session存值
 		request.getSession().setAttribute("userId", "userId110");
 		
+		request.setAttribute("userName", "fuck");
 		return "/demo";
 	}
 }

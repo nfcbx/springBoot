@@ -12,6 +12,20 @@
         <div>
         	获取session中的值:
         	<p th:text="${session.userId}">${session.userId}</p>
+        	<p th:text="${#httpServletRequest.getParameter('userName')}">这个方法接收的是地址栏里的参数，后台request.setAttribute("userName", "fuck")无效</p>
+        	
+        	
+        	<p th:text="${userName}">这种方式直接取后台request里的参数</p>
+        </div>
+        
+        <div>
+        	
+        	<p th:text="${param.z}">z  这个是一个对象数组  [Ljava.lang.String;@b7f630a</p>
+        	
+        	
+        	<p th:text="${param.z[0]}" th:unless="${param.z} == null">z[0]</p>
+        	unless写法可以避免出现空异常
+        
         </div>
         
         
