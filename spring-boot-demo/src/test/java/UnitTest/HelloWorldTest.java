@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.zsx.App;
 import com.zsx.service.TestService;
+import com.zsx.service.impl.TestServiceImpl;
 
 /**
  * springBoot 1.4版本后的单元测试
@@ -25,7 +26,15 @@ public class HelloWorldTest {
 
 	@Test
 	public void name() {
+		
+		
+		
+//		testService = new TestServiceImpl();
+		
 		testService.gettime();
+		
+		
+		
 	}
 
 }

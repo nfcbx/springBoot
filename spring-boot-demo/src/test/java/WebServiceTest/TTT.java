@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 import javax.jws.WebService;
 
-@WebService
+@WebService(name = "testService" , targetNamespace = "http://ws.itcast.cn/")
 public class TTT {
 	
 	public String name() {
