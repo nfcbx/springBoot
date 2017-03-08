@@ -22,7 +22,6 @@ public class UtilTest {
 		
 		
 		for (int i = 0; i < 5; i++) {
-			System.out.println(aa);
 //			executorService.execute(new Task1(i));
 			
 			executorService.execute(new Task2());

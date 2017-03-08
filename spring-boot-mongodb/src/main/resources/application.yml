@@ -1,0 +1,8 @@
+server:
+    port: 8080
+#    context-path: /mongodb
+
+spring: 
+    data: 
+        mongodb: 
+            uri: mongodb://root:123456@127.0.0.1:27017/mydb

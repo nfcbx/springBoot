@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.zsx</groupId>
 	<artifactId>spring-boot-hibernate</artifactId>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<version>0.0.1</version>
 	<name>zsx Maven Webapp</name>
 	<url>http://maven.apache.org</url>
