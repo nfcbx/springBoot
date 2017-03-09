@@ -11,13 +11,8 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
       http://www.springframework.org/schema/mvc  
       http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
 			
-	<!-- 注解扫描包 , 多个写法:com.zsx.web.*,org.weixin.*  (以完成bean创建和自动依赖注入的功能)-->
-	<context:component-scan base-package="com.zsx.*" >
-		<!-- springMVC配置文件中将Service注解给去掉 -->
-		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
-		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service" />
-		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository" />
-	</context:component-scan>	
+	<!-- 注解扫描包 , 以完成bean创建和自动依赖注入的功能 -->
+	<context:component-scan base-package="com.zsx" />	
 	
 	<!-- 开启注解方案2 -->
 	<mvc:annotation-driven />
@@ -28,8 +23,9 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 	<!-- 视图解释类 -->
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- 前缀 -->
 		<property name="prefix" value="/"></property>
-		<!--可为空,方便实现自已的依据扩展名来选择视图解释类的逻辑 -->
+		<!--后缀 -->
 		<property name="suffix" value=".jsp"></property>
 	</bean>
 	

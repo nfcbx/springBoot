@@ -13,8 +13,6 @@
 		<jdk.version>1.7</jdk.version>
 		<!-- spring版本号 -->
 		<spring.version>4.3.2.RELEASE</spring.version>
-		<!-- hibernate版本号 -->
-		<hibernate.version>5.1.0.Final</hibernate.version>
 	</properties>
 
 	<dependencies>
@@ -83,22 +81,6 @@
 			<version>1.8.9</version>
 		</dependency>
 		
-		
-		<!-- mysql连接 -->  
-        <dependency>  
-            <groupId>mysql</groupId>  
-            <artifactId>mysql-connector-java</artifactId>  
-            <version>5.1.39</version>  
-        </dependency> 
-
-		
-		<!-- hibernate -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>${hibernate.version}</version>
-		</dependency>
-
 		<!-- Json包 -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
