@@ -1,6 +1,7 @@
 package listTest;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ListTest {
@@ -16,6 +17,9 @@ public class ListTest {
 		
 		
 		System.out.println(list);
+		
+		
+		HashMap<Object, Object> hashMap = new HashMap<Object, Object>();
 	}
 
 }

@@ -4,6 +4,9 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="spring-boot-hibernate-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/spring-boot-hibernate/spring-boot-hibernate">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="spring-boot-demo"/>
         <property name="java-output-path" value="/spring-boot-demo/target/classes"/>
     </wb-module>
