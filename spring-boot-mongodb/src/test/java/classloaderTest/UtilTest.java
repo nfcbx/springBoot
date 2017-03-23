@@ -4,22 +4,21 @@ public class UtilTest {
 
 	public static void main(String[] args) throws Exception {
 		
-//		ClassLoader loader = new MyClassLoader();
+		ClassLoader loader = new MyClassLoader();
 		
-		ClassLoader loader = ClassLoader.getSystemClassLoader();
+//		ClassLoader loader = ClassLoader.getSystemClassLoader();
 		
+		Thread.currentThread().setContextClassLoader(new MyClassLoader());
 		
-		
-		Class<?> loadClass = loader.loadClass("classloaderTest2.UtilTest");
+		Class<?> loadClass = loader.loadClass("classloaderTest.UtilTest");
 		
 		System.out.println(loadClass.getName());
 		
 //		Method method = loadClass.getMethod("main", String[].class);
 		
 		
+		
 //		method.invoke(loadClass.newInstance(), args);
-		
-		
 		
 		
 		
