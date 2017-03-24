@@ -1,4 +1,4 @@
-package springIoc;
+package springIoc.config;
 
 import java.io.InputStream;
 import java.util.HashMap;
@@ -9,6 +9,8 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+
+import com.alibaba.fastjson.JSON;
 
 public class XmlConfig {
 
@@ -77,6 +79,7 @@ public class XmlConfig {
 				configMap.put(id, bean);
 			}
 		}
+		System.out.println(JSON.toJSONString(configMap));
 		return configMap;
 	}
 

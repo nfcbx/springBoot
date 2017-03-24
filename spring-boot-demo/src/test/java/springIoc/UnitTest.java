@@ -1,5 +1,8 @@
 package springIoc;
 
+import springIoc.config.BeanFactory;
+import springIoc.config.ClassPathXmlApplicationContext;
+
 public class UnitTest {
 
 	public static void main(String[] args) {

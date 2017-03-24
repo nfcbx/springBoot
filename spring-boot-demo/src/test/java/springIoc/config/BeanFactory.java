@@ -1,4 +1,4 @@
-package springIoc;
+package springIoc.config;
 
 /**
  * 定义bean工厂

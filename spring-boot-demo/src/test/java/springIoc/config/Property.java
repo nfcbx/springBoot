@@ -1,4 +1,4 @@
-package springIoc;
+package springIoc.config;
 
 public class Property {
 	private String name;

@@ -1,4 +1,4 @@
-package springIoc;
+package springIoc.config;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -6,6 +6,8 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import com.alibaba.fastjson.JSON;
 
 import groovy.lang.BenchmarkInterceptor;
 
@@ -72,11 +74,7 @@ public class ClassPathXmlApplicationContext implements BeanFactory {
 					try {
 //						调用set方法注入
 						getMethod.invoke(object, p.getValue());
-					} catch (IllegalAccessException e) {
-						e.printStackTrace();
-					} catch (IllegalArgumentException e) {
-						e.printStackTrace();
-					} catch (InvocationTargetException e) {
+					} catch (Exception e) {
 						e.printStackTrace();
 						throw new RuntimeException("属性名称不合法或者没有相应的getter方法："+p.getName());
 					}
@@ -94,11 +92,7 @@ public class ClassPathXmlApplicationContext implements BeanFactory {
 						try {
 							//调用set方法注入
 							getMethod.invoke(object, obj);
-						} catch (IllegalAccessException e) {
-							e.printStackTrace();
-						} catch (IllegalArgumentException e) {
-							e.printStackTrace();
-						} catch (InvocationTargetException e) {
+						} catch (Exception e) {
 							e.printStackTrace();
 							throw new RuntimeException("属性名称不合法或者没有相应的getter方法："+p.getName());
 						}

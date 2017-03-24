@@ -1,4 +1,4 @@
-package springIoc;
+package springIoc.config;
 
 import java.util.ArrayList;
 import java.util.List;
