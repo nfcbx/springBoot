@@ -2,6 +2,7 @@ package springIoc.config;
 
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +23,12 @@ public class XmlConfig {
 	public static Map<String, Bean> getConfig(String path) {
 
 		Map<String, Bean> configMap = new HashMap<String, Bean>();
+		
+		/*
+		 * 使用HashMap时，因为HashMap不是有序的，假如有A，B两个对象，B引用了A，但往bean工厂里面放的时候，先放的B，
+		 * 再放A，导致读取B的配置时，找不到A就会出现异常
+		 */
+		configMap = new LinkedHashMap<String, Bean>();
 		
 		Document doc = null;
 		SAXReader reader = new SAXReader();
@@ -60,6 +67,8 @@ public class XmlConfig {
 						String propName = element2.attributeValue("name");
 						String propValue = element2.attributeValue("value");
 						String propRef = element2.attributeValue("ref");
+						
+						
 						
 //						封装
 						property.setName(propName);
