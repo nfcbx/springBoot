@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+	
+	<bean id="userService" class="springIoc.UserServiceImpl" />
+	
+	<bean id="info" class="springIoc.Info">
+		<property name="msg" value="个人信息"></property>
+	</bean>
+	
+	<bean id="user" class="springIoc.User">
+		<property name="name" value="zhaoshuxue"></property>
+		<property name="info" ref="info"></property>
+	</bean>
+
+
+</beans>
