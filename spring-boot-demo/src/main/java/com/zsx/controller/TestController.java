@@ -1,22 +1,29 @@
 package com.zsx.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.alibaba.fastjson.JSONObject;
+import com.zsx.config.ConfigProperties;
 import com.zsx.util.ExecutorUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 public class TestController {
 
+	@Autowired
+	private ConfigProperties configProperties;
+
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String name() {
+
+		System.out.println(configProperties.toString());
+		System.out.println(configProperties.getAdditionalHeaders());
+		System.out.println(configProperties.getCredentials());
+		System.out.println(configProperties.getCs());
+		System.out.println(configProperties.getMp());
+		System.out.println(configProperties.getRecipients());
+
 		return "Hello zhao!";
 	}
 	
@@ -34,8 +41,7 @@ public class TestController {
 	
 	@GetMapping(value = {"/aa"})
 	public Object name3(HttpServletRequest request, @RequestParam(value = "name", defaultValue="123") String name) {
-		JSONObject object = new JSONObject();
-		
+		final JSONObject object = new JSONObject();
 		
 		ExecutorUtil.executor.execute(new Runnable() {
 			
