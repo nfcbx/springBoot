@@ -91,12 +91,11 @@
 			<version>5.6.3</version>
 		</dependency>
 
-		<!-- <dependency> <groupId>junit</groupId> <artifactId>junit</artifactId> 
-			<version>4.12</version> <scope>test</scope> </dependency> -->
+		<!-- mq -->
 		<dependency>
 			<groupId>org.apache.rocketmq</groupId>
 			<artifactId>rocketmq-client</artifactId>
-			<version>4.1.0-incubating</version>
+			<version>4.2.0</version>
 		</dependency>
 
 	</dependencies>
