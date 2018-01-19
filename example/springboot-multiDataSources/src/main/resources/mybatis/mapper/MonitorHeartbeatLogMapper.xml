@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zsx.dao.MonitorHeartbeatLogMapper">
+  <resultMap id="BaseResultMap" type="com.zsx.entity.MonitorHeartbeatLog">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="config_id" jdbcType="INTEGER" property="configId" />
+    <result column="interval_time" jdbcType="INTEGER" property="intervalTime" />
+    <result column="total_jvm" jdbcType="VARCHAR" property="totalJvm" />
+    <result column="used_jvm" jdbcType="VARCHAR" property="usedJvm" />
+    <result column="cpu" jdbcType="VARCHAR" property="cpu" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, config_id, interval_time, total_jvm, used_jvm, cpu, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from monitor_heartbeat_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from monitor_heartbeat_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zsx.entity.MonitorHeartbeatLog">
+    insert into monitor_heartbeat_log (id, config_id, interval_time, 
+      total_jvm, used_jvm, cpu, 
+      create_time)
+    values (#{id,jdbcType=INTEGER}, #{configId,jdbcType=INTEGER}, #{intervalTime,jdbcType=INTEGER}, 
+      #{totalJvm,jdbcType=VARCHAR}, #{usedJvm,jdbcType=VARCHAR}, #{cpu,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zsx.entity.MonitorHeartbeatLog">
+    insert into monitor_heartbeat_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="configId != null">
+        config_id,
+      </if>
+      <if test="intervalTime != null">
+        interval_time,
+      </if>
+      <if test="totalJvm != null">
+        total_jvm,
+      </if>
+      <if test="usedJvm != null">
+        used_jvm,
+      </if>
+      <if test="cpu != null">
+        cpu,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="configId != null">
+        #{configId,jdbcType=INTEGER},
+      </if>
+      <if test="intervalTime != null">
+        #{intervalTime,jdbcType=INTEGER},
+      </if>
+      <if test="totalJvm != null">
+        #{totalJvm,jdbcType=VARCHAR},
+      </if>
+      <if test="usedJvm != null">
+        #{usedJvm,jdbcType=VARCHAR},
+      </if>
+      <if test="cpu != null">
+        #{cpu,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zsx.entity.MonitorHeartbeatLog">
+    update monitor_heartbeat_log
+    <set>
+      <if test="configId != null">
+        config_id = #{configId,jdbcType=INTEGER},
+      </if>
+      <if test="intervalTime != null">
+        interval_time = #{intervalTime,jdbcType=INTEGER},
+      </if>
+      <if test="totalJvm != null">
+        total_jvm = #{totalJvm,jdbcType=VARCHAR},
+      </if>
+      <if test="usedJvm != null">
+        used_jvm = #{usedJvm,jdbcType=VARCHAR},
+      </if>
+      <if test="cpu != null">
+        cpu = #{cpu,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zsx.entity.MonitorHeartbeatLog">
+    update monitor_heartbeat_log
+    set config_id = #{configId,jdbcType=INTEGER},
+      interval_time = #{intervalTime,jdbcType=INTEGER},
+      total_jvm = #{totalJvm,jdbcType=VARCHAR},
+      used_jvm = #{usedJvm,jdbcType=VARCHAR},
+      cpu = #{cpu,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!---->
+  <sql id="Base_Where_Clause">
+    <where>
+      1=1
+      <if test="search.moreId != null">
+        and id > #{search.moreId,jdbcType=INTEGER}
+      </if>
+      <if test="search.configId != null">
+        and config_id = #{search.configId,jdbcType=INTEGER}
+      </if>
+      <if test="search.ids != null and search.ids.size() > 0">
+        and id in
+        <foreach item="item" index="index" collection="search.ids" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      <if test="search.endDate != null">
+        and create_time &lt; #{search.endDate,jdbcType=TIMESTAMP}
+      </if>
+
+    </where>
+  </sql>
+
+
+
+  <select id="queryForList" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM monitor_heartbeat_log
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into monitor_heartbeat_log
+    (
+      id, config_id, interval_time,
+      total_jvm, used_jvm, cpu,
+      create_time
+    )
+    values
+    <foreach collection="list" index="index" item="item" separator=",">
+      (
+        #{item.id,jdbcType=INTEGER}, #{item.configId,jdbcType=INTEGER}, #{item.intervalTime,jdbcType=INTEGER},
+        #{item.totalJvm,jdbcType=VARCHAR}, #{item.usedJvm,jdbcType=VARCHAR}, #{item.cpu,jdbcType=VARCHAR},
+        #{item.createTime,jdbcType=TIMESTAMP}
+      )
+    </foreach>
+  </insert>
+</mapper>
