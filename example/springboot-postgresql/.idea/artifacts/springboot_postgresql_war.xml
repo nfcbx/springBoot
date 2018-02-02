@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="springboot-postgresql:war">
-    <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="springboot-postgresql.war">
-      <element id="artifact" artifact-name="springboot-postgresql:war exploded" />
-    </root>
-  </artifact>
-</component>

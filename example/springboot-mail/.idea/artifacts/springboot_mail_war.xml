@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="springboot-mail:war">
-    <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="springboot-mail.war">
-      <element id="artifact" artifact-name="springboot-mail:war exploded" />
-    </root>
-  </artifact>
-</component>
