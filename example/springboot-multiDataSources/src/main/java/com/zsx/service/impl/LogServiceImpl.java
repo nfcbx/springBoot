@@ -46,7 +46,7 @@ public class LogServiceImpl implements LogService {
         Integer id = list.get(0).getId();
         map.clear();
         map.put("moreId", id);
-        DateTime dateTime = new DateTime(2018, 1, 1, 0, 0);
+        DateTime dateTime = new DateTime(2018, 2, 1, 0, 0);
         map.put("endDate", dateTime.toDate());
         PageInfo<MonitorHeartbeatLog> pageInfo = userService.getLogPageListSlave(map, firstPageNum, pageSize);
         System.out.println(JSON.toJSONString(pageInfo));
