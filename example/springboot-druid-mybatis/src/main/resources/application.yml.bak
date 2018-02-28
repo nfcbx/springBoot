@@ -23,8 +23,18 @@ spring:
 
 # mybatis配置
 mybatis:
-  config-location: classpath:mybatis/mybatis-config.xml
+#  config-location: classpath:mybatis/mybatis-config.xml
   mapper-locations: classpath:mybatis/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    lazy-loading-enabled: true
+    multiple-result-sets-enabled: true
+    use-column-label: true
+    use-generated-keys: false
+    default-executor-type: simple
+    default-statement-timeout: 25000
+
 
 
 # 打印sql
@@ -33,4 +43,5 @@ logging:
       com:
           zsx:
               dao: debug
-
+server:
+  port: 8081
