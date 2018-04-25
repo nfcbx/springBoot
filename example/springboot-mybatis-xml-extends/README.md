@@ -121,6 +121,7 @@
 ```
 
 - UserMapper.java
+
 ```
 package com.zsx.dao;
 
@@ -147,29 +148,142 @@ public interface UserMapper {
 }
 ```
 
+## 扩展类，mapper继承文件
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- UserDao.java
 
 ```
+package com.zsx.dao;
+
+import com.zsx.entity.User;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+@Mapper
+public interface UserDao extends UserMapper {
+
+    List<User> selectByParams(@Param("search") Object search);
+
+}
 ```
+
+- TuserMapperDao.xml
+
 ```
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zsx.dao.UserDao">
+    <resultMap id="BaseResultMap" type="com.zsx.entity.User">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+        username, password
+    </sql>
+
+    <sql id="Base_Where_Clause">
+        <where>
+            1=1
+            <if test="search.username != null">
+                and username = #{search.username,jdbcType=VARCHAR}
+            </if>
+            <if test="search.isDel != null">
+                and is_del = #{search.isDel,jdbcType=INTEGER}
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectByParams" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM t_user
+        <include refid="Base_Where_Clause"/>
+    </select>
+</mapper>
 ```
+
+1. Mapper.xml继承机制只针对statement有效，对于sql、resultMap是无效的。
+2. > 规律可以总结为：
+
+   > 1). ParentMapper.xml中有，ChildMapper.xml中没有，ChildMapper沿用ParentMapper.xml中的定义
+
+   > 2). ParentMapper.xml中有，ChildMapper.xml中也有，ChildMapper使用ChildMapper.xml中的定义
+
+   > 3). ParentMapper.xml中没有，ChildMapper.xml中有，ChildMapper使用ChildMapper.xml中的定义
+
+3. 后续修改字段等操作后，可以使用工具直接替换 UserMapper.java 和 TuserMapper.xml 这两个文件，尽量减少了文件的比较和解决冲突
+
+## 公共的mapper文件
+
+我们还可以抽出一个有公共方法的mapper文件，这样就不需要每次都写名扩展的自定义方法了，同时这些方法在mapper.xml里面没有实现也是没有问题的。
+
+- BaseDao.java
+
+```
+package com.zsx.dao;
+
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+/**
+ * Created by highness on 2018/3/9 0009.
+ */
+public interface BaseDao<E> {
+    /**mybatis-generator:generate begin***/
+    E selectByPrimaryKey(Long id);
+
+    int deleteByPrimaryKey(Long id);
+
+    int insert(E entity);
+
+    int insertSelective(E entity);
+
+    int updateByPrimaryKeySelective(E entity);
+
+    int updateByPrimaryKey(E entity);
+    /**mybatis-generator:generate end***/
+
+    /**extended definition begin***/
+    int insertBatch(List<E> entityList);
+
+    int deleteBatchByPrimaryKey(@Param("search") Object search);
+
+    int updateByParamsSelective(@Param("entity") E entity, @Param("search") Object search);
+
+    int countByParams(@Param("search") Object search);
+
+    List<Long> selectForPrimaryKey(@Param("search") Object search);
+
+    List<E> selectByParams(@Param("search") Object search);
+    /**extended definition end***/
+}
+```
+
+使用时只需在对应的mapper里面继承baseDao即可，如下：
+
+```
+@Mapper
+public interface UserMapper extends BaseDao<User>{
+}
+```
+
+
+---
+
+具体代码可以去github上clone，地址为：
+
+https://github.com/zhaoshuxue/springBoot/tree/master/example/springboot-mybatis-xml-extends
+
+
 
 
 
