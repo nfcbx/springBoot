@@ -77,6 +77,13 @@
         </dependency>
 
 
+        <dependency>
+            <groupId>com.zsx</groupId>
+            <artifactId>spring-boot-starter-sqlite-demo</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+
+
     </dependencies>
     <build>
         <finalName>springboot-sqlite</finalName>
