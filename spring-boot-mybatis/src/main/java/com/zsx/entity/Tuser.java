@@ -1,4 +1,4 @@
-package com.zsx.entity;
+package com.erp.entity;
 
 public class Tuser {
     private Long id;
