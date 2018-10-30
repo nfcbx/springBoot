@@ -3,6 +3,8 @@ package lambda;
 import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by ZSX on 2018/10/26.
@@ -26,6 +28,14 @@ public class Demo1026 {
         list.forEach(System.out::println);
 
 
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+
+
+        executorService.execute(() -> list.size());
+
     }
 
 }
+
+
+
