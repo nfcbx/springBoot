@@ -14,6 +14,13 @@ import java.util.concurrent.Executors;
 public class Demo1026 {
 
     public static void main(String[] args) {
+
+
+
+
+    }
+
+    public static void main1(String[] args) {
         ArrayList<Integer> list = Lists.newArrayList(111, 222, 333, 444, 555);
 
         System.out.println("以前的循环方式");
