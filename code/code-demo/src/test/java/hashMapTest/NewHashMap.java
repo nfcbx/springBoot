@@ -450,15 +450,17 @@ public class NewHashMap<K,V> extends AbstractMap<K,V>
     final float loadFactor;
 
     /* ---------------- Public operations -------------- */
+//    下面是HashMap的4个构造方法
 
     /**
      * Constructs an empty <tt>HashMap</tt> with the specified initial
      * capacity and load factor.
      *
-     * @param  initialCapacity the initial capacity
-     * @param  loadFactor      the load factor
+     * @param  initialCapacity the initial capacity  初始化容量
+     * @param  loadFactor      the load factor       负载因子
      * @throws IllegalArgumentException if the initial capacity is negative
      *         or the load factor is nonpositive
+     *         初始化容量为负数，或者负载因子<=0 时会抛出IllegalArgumentException
      */
     public NewHashMap(int initialCapacity, float loadFactor) {
         if (initialCapacity < 0)
@@ -470,12 +472,15 @@ public class NewHashMap<K,V> extends AbstractMap<K,V>
             throw new IllegalArgumentException("Illegal load factor: " +
                     loadFactor);
         this.loadFactor = loadFactor;
+//        初始化数组，利用tableSizeFor计算了长度
         this.threshold = tableSizeFor(initialCapacity);
     }
 
     /**
      * Constructs an empty <tt>HashMap</tt> with the specified initial
      * capacity and the default load factor (0.75).
+     *
+     * 利用指定的容量和默认负载因子(0.75).构造一个空的HashMap
      *
      * @param  initialCapacity the initial capacity.
      * @throws IllegalArgumentException if the initial capacity is negative.
@@ -487,6 +492,8 @@ public class NewHashMap<K,V> extends AbstractMap<K,V>
     /**
      * Constructs an empty <tt>HashMap</tt> with the default initial capacity
      * (16) and the default load factor (0.75).
+     *
+     * 利用默认初始容量(16)和默认负载因子(0.75).构造一个空的HashMap
      */
     public NewHashMap() {
         this.loadFactor = DEFAULT_LOAD_FACTOR; // all other fields defaulted
@@ -497,6 +504,8 @@ public class NewHashMap<K,V> extends AbstractMap<K,V>
      * specified <tt>Map</tt>.  The <tt>HashMap</tt> is created with
      * default load factor (0.75) and an initial capacity sufficient to
      * hold the mappings in the specified <tt>Map</tt>.
+     *
+     * 根据给定的Map和默认的初始容量以及默认负载因子构造一个HashMap
      *
      * @param   m the map whose mappings are to be placed in this map
      * @throws  NullPointerException if the specified map is null
@@ -515,16 +524,22 @@ public class NewHashMap<K,V> extends AbstractMap<K,V>
      */
     final void putMapEntries(Map<? extends K, ? extends V> m, boolean evict) {
         int s = m.size();
+//        如果给定的map是空的话，则不进行其它操作
         if (s > 0) {
+//            如果哈希桶还没有初始化
             if (table == null) { // pre-size
+//                计算相关阈值
                 float ft = ((float)s / loadFactor) + 1.0F;
                 int t = ((ft < (float)MAXIMUM_CAPACITY) ?
                         (int)ft : MAXIMUM_CAPACITY);
                 if (t > threshold)
+//                    这里计算后，不立即进行初始化/扩容
                     threshold = tableSizeFor(t);
             }
             else if (s > threshold)
+//                初始化或者扩容
                 resize();
+//            循环存放元素
             for (Map.Entry<? extends K, ? extends V> e : m.entrySet()) {
                 K key = e.getKey();
                 V value = e.getValue();
@@ -634,9 +649,9 @@ public class NewHashMap<K,V> extends AbstractMap<K,V>
      * @param hash hash for key
      * @param key the key
      * @param value the value to put
-     * @param onlyIfAbsent if true, don't change existing value
-     * @param evict if false, the table is in creation mode.
-     * @return previous value, or null if none
+     * @param onlyIfAbsent if true, don't change existing value  如果为true，不改变旧值
+     * @param evict if false, the table is in creation mode.  如果为false，则表将采取creation模式
+     * @return previous value, or null if none   前一个值，如果没有则返回null
      */
     final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
                    boolean evict) {
