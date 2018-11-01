@@ -22,6 +22,8 @@ public class CodeDemo {
         System.out.println(2 << 4);
         System.out.println(3 << 4);
 
+        System.out.println("HashMap最大容量：" + (1 << 30));
+
     }
 
 }

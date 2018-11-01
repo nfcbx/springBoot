@@ -217,6 +217,7 @@ public class NewHashMap<K,V> extends AbstractMap<K,V>
 
     /**
      * The default initial capacity - MUST be a power of two.
+     * 默认初始容量
      */
     static final int DEFAULT_INITIAL_CAPACITY = 1 << 4; // aka 16
 
@@ -224,11 +225,14 @@ public class NewHashMap<K,V> extends AbstractMap<K,V>
      * The maximum capacity, used if a higher value is implicitly specified
      * by either of the constructors with arguments.
      * MUST be a power of two <= 1<<30.
+     *
+     * 最大容量 1073741824
      */
     static final int MAXIMUM_CAPACITY = 1 << 30;
 
     /**
      * The load factor used when none specified in constructor.
+     * 默认负载因子（当存储比例超过该参数时会触发HashMap扩容）
      */
     static final float DEFAULT_LOAD_FACTOR = 0.75f;
 
@@ -239,6 +243,8 @@ public class NewHashMap<K,V> extends AbstractMap<K,V>
      * than 2 and should be at least 8 to mesh with assumptions in
      * tree removal about conversion back to plain bins upon
      * shrinkage.
+     *
+     * 链表->树化阈值？
      */
     static final int TREEIFY_THRESHOLD = 8;
 
@@ -246,6 +252,8 @@ public class NewHashMap<K,V> extends AbstractMap<K,V>
      * The bin count threshold for untreeifying a (split) bin during a
      * resize operation. Should be less than TREEIFY_THRESHOLD, and at
      * most 6 to mesh with shrinkage detection under removal.
+     *
+     * 树->链表化阈值？
      */
     static final int UNTREEIFY_THRESHOLD = 6;
 
@@ -254,6 +262,8 @@ public class NewHashMap<K,V> extends AbstractMap<K,V>
      * (Otherwise the table is resized if too many nodes in a bin.)
      * Should be at least 4 * TREEIFY_THRESHOLD to avoid conflicts
      * between resizing and treeification thresholds.
+     *
+     * 树化后表格最小容量（至少4倍于TREEIFY_THRESHOLD）？
      */
     static final int MIN_TREEIFY_CAPACITY = 64;
 
@@ -261,12 +271,14 @@ public class NewHashMap<K,V> extends AbstractMap<K,V>
      * Basic hash bin node, used for most entries.  (See below for
      * TreeNode subclass, and in LinkedHashMap for its Entry subclass.)
      */
+//    静态内部类
     static class Node<K,V> implements Map.Entry<K,V> {
-        final int hash;
-        final K key;
-        V value;
-        Node<K,V> next;
+        final int hash; // hash
+        final K key; // 键
+        V value; // 值
+        Node<K,V> next; // 下一个节点
 
+//        构造函数
         Node(int hash, K key, V value, Node<K,V> next) {
             this.hash = hash;
             this.key = key;
@@ -274,7 +286,9 @@ public class NewHashMap<K,V> extends AbstractMap<K,V>
             this.next = next;
         }
 
+//        获取key
         public final K getKey()        { return key; }
+//        获取value
         public final V getValue()      { return value; }
         public final String toString() { return key + "=" + value; }
 
@@ -289,6 +303,7 @@ public class NewHashMap<K,V> extends AbstractMap<K,V>
         }
 
         public final boolean equals(Object o) {
+//            地址比较
             if (o == this)
                 return true;
             if (o instanceof Map.Entry) {
@@ -377,6 +392,8 @@ public class NewHashMap<K,V> extends AbstractMap<K,V>
      * necessary. When allocated, length is always a power of two.
      * (We also tolerate length zero in some operations to allow
      * bootstrapping mechanics that are currently not needed.)
+     *
+     * 存储K，V的数组
      */
     transient Node<K,V>[] table;
 
