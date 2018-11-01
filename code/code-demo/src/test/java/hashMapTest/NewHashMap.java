@@ -394,18 +394,25 @@ public class NewHashMap<K,V> extends AbstractMap<K,V>
      * bootstrapping mechanics that are currently not needed.)
      *
      * 存储K，V的数组
+     * 负责存储的哈希桶（table)，首次使用的时候进行初始化，在必要时进行扩容
+     * 分配时，长度总是2的n次幂
      */
+//
     transient Node<K,V>[] table;
 
     /**
      * Holds cached entrySet(). Note that AbstractMap fields are used
      * for keySet() and values().
+     *
+     * 缓存entrySet？
      */
     transient Set<Entry<K,V>> entrySet;
 
     /**
      * The number of key-value mappings contained in this map.
+     *
      */
+//    map的size
     transient int size;
 
     /**
@@ -414,7 +421,12 @@ public class NewHashMap<K,V> extends AbstractMap<K,V>
      * the HashMap or otherwise modify its internal structure (e.g.,
      * rehash).  This field is used to make iterators on Collection-views of
      * the HashMap fail-fast.  (See ConcurrentModificationException).
+     *
+     * HashMap在结构上的修改次数
+     * 该字段用于fail-fast策略
+     * 就是当使用迭代器时，如果发现预期的modCount与实际不合时抛出ConcurrentModificationException
      */
+//
     transient int modCount;
 
     /**
@@ -426,12 +438,14 @@ public class NewHashMap<K,V> extends AbstractMap<K,V>
     // Additionally, if the table array has not been allocated, this
     // field holds the initial array capacity, or zero signifying
     // DEFAULT_INITIAL_CAPACITY.)
+//      下次resize时的哈希桶大小(capacity * load factor).
     int threshold;
 
     /**
      * The load factor for the hash table.
      *
      * @serial
+     * hash  table的负载因子
      */
     final float loadFactor;
 
