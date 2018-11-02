@@ -662,6 +662,7 @@ public class NewHashMap<K,V> extends AbstractMap<K,V>
             tab[i] = newNode(hash, key, value, null);
         else {
             Node<K,V> e; K k;
+//            先比较hash，效率高
             if (p.hash == hash &&
                     ((k = p.key) == key || (key != null && key.equals(k))))
                 e = p;

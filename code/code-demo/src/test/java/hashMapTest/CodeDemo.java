@@ -1,6 +1,7 @@
 package hashMapTest;
 
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 
 /**
@@ -12,9 +13,13 @@ public class CodeDemo {
 
     public static void main(String[] args) {
         Map map = new HashMap();
-        NewHashMap newHashMap = new NewHashMap<>();
-        newHashMap.put("asdf", "asdfasdfasd1");
 
+
+        NewHashMap newHashMap = new NewHashMap<>();
+        Object put = newHashMap.put("asdf", "asdfasdfasd1");
+        System.out.println(put);
+        put = newHashMap.put("asdf", "asdfasdfasd2");
+        System.out.println(put);
 
         System.out.println(newHashMap);
 
