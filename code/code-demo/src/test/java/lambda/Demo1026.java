@@ -15,9 +15,11 @@ public class Demo1026 {
 
     public static void main(String[] args) {
 
-        for (int i = 9999979; i < 9999999; i++) {
-            System.out.println(i&15);
-        }
+        test2();
+
+//        for (int i = 9999979; i < 9999999; i++) {
+//            System.out.println(i&15);
+//        }
 
 //        System.out.println(11&(16-1));
 //        System.out.println(12&(16-1));
@@ -26,6 +28,42 @@ public class Demo1026 {
 
 
     }
+
+    public static void test2(){
+
+        System.out.println(Integer.MAX_VALUE); // 2147483647  二十一亿四千七百四十八万三千六百四十七
+        System.out.println(Integer.MIN_VALUE); // -2147483648
+
+        String str1 = "abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc";
+        String str2 = "efgefgefgefgefgefg";
+
+        int hashCode1 = str1.hashCode();
+        int hashCode2 = str2.hashCode();
+
+        System.out.println(hashCode1); //
+        System.out.println(hashCode2); //
+
+        int num1 = hashCode1 >>> 16;
+        int num2 = hashCode2 >>> 16;
+        System.out.println(num1); //
+        System.out.println(num2); //
+
+        int hash1 = hashCode1 ^ num1;
+        int hash2 = hashCode2 ^ num2;
+        System.out.println(hash1);
+        System.out.println(hash2);
+
+        System.out.println(15 & hash1);
+        System.out.println(15 & hash2);
+
+
+
+
+
+
+    }
+
+
 
     public static void main1(String[] args) {
         ArrayList<Integer> list = Lists.newArrayList(111, 222, 333, 444, 555);
