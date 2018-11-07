@@ -1,8 +1,8 @@
 package hashMapTest;
 
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by ZSX on 2018/10/30.
@@ -13,6 +13,16 @@ public class CodeDemo {
 
     public static void main(String[] args) {
         Map map = new HashMap();
+
+        ConcurrentHashMap concurrentHashMap = new ConcurrentHashMap();
+        concurrentHashMap.put("123", "456");
+        System.out.println(concurrentHashMap);
+
+        NewConcurrentHashMap newConcurrentHashMap = new NewConcurrentHashMap(2);
+
+        newConcurrentHashMap.put("123", "456");
+
+        System.out.println(newConcurrentHashMap);
 
 
         NewHashMap newHashMap = new NewHashMap<>();
