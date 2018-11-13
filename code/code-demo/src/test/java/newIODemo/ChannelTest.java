@@ -1,8 +1,11 @@
 package newIODemo;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 
@@ -14,7 +17,8 @@ import java.nio.channels.SocketChannel;
 public class ChannelTest {
 
     public static void main(String[] args) throws Exception {
-        ServerSocketChannelTest();
+//        ServerSocketChannelTest();
+        fileChannelTest();
 
     }
 
@@ -27,6 +31,31 @@ public class ChannelTest {
         // 发起连接
         socketChannel.connect(new InetSocketAddress("https://www.javadoop.com", 80));
 
+
+    }
+
+    public static void fileChannelTest() throws IOException {
+
+        FileInputStream fileInputStream = new FileInputStream(new File("D:\\git\\zhaoshuxue\\springBoot\\code\\code-demo\\pom.xml"));
+        FileChannel fileChannel = fileInputStream.getChannel();
+
+        ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+
+        fileChannel.read(byteBuffer);
+
+        byteBuffer.flip();
+
+        StringBuffer sb = new StringBuffer();
+        while (byteBuffer.remaining() > 0) {
+            byte b = byteBuffer.get();
+            sb.append((char) b);
+//            String trim = new String(byteBuffer.array()).trim();
+//            System.out.println(trim);
+        }
+
+        System.out.println(sb.toString());
+
+        fileInputStream.close();
 
     }
 
