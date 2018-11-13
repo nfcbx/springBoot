@@ -53,7 +53,7 @@ public class 单元测试 {
      @Ignore	忽略测试方法
      @Test	执行单元测试的方法
      */
-//    @Ignore
+    @Ignore
     @Test
     public void testtest() throws InterruptedException {
         sw.start("休眠1秒");
