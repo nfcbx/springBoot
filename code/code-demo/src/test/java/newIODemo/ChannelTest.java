@@ -56,7 +56,6 @@ public class ChannelTest {
         System.out.println(sb.toString());
 
         fileInputStream.close();
-
     }
 
     public static void ServerSocketChannelTest() throws IOException {
