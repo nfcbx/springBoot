@@ -39,21 +39,32 @@ public class ChannelTest {
         FileInputStream fileInputStream = new FileInputStream(new File("D:\\git\\zhaoshuxue\\springBoot\\code\\code-demo\\pom.xml"));
         FileChannel fileChannel = fileInputStream.getChannel();
 
+
         ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
 
         fileChannel.read(byteBuffer);
 
         byteBuffer.flip();
 
+        System.out.println(byteBuffer.limit());
+
         StringBuffer sb = new StringBuffer();
-        while (byteBuffer.remaining() > 0) {
-            byte b = byteBuffer.get();
-            sb.append((char) b);
+        while (byteBuffer.limit() > 0) {
+            while (byteBuffer.remaining() > 0) {
+                byte b = byteBuffer.get();
+                sb.append((char) b);
 //            String trim = new String(byteBuffer.array()).trim();
 //            System.out.println(trim);
-        }
+            }
 
+            byteBuffer.flip();
+            //
+            fileChannel.read(byteBuffer);
+
+            byteBuffer.flip();
+        }
         System.out.println(sb.toString());
+
 
         fileInputStream.close();
     }
