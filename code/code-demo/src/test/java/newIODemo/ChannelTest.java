@@ -17,8 +17,8 @@ import java.nio.channels.SocketChannel;
 public class ChannelTest {
 
     public static void main(String[] args) throws Exception {
-//        ServerSocketChannelTest();
-        fileChannelTest();
+        ServerSocketChannelTest();
+//        fileChannelTest();
 
     }
 
@@ -73,8 +73,8 @@ public class ChannelTest {
         // 实例化
         ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
         // 监听 8080 端口
-        InetSocketAddress inetSocketAddress = new InetSocketAddress(8080);
-//        InetSocketAddress inetSocketAddress = new InetSocketAddress("10.37.251.63", 80);
+//        InetSocketAddress inetSocketAddress = new InetSocketAddress(8080);
+        InetSocketAddress inetSocketAddress = new InetSocketAddress("www.funimg.top", 80);
         serverSocketChannel.socket().bind(inetSocketAddress);
 
         while (true) {
