@@ -1,15 +1,19 @@
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by highness on 2018/10/28 0028.
  */
 public class arrayListDemo {
 
     public static void main(String[] args) {
-        List list = new ArrayList();
 
-        list.add(1);
+//        EventBus eventBus = new EventBus();
+        String aaa = new String("aaa");
+        String bbb = new String("aaa");
+
+        System.out.println(aaa.hashCode());
+        System.out.println(bbb.hashCode());
+
+        System.out.println(aaa == bbb);
+        System.out.println(aaa.equals(bbb));
 
 
     }
