@@ -306,6 +306,7 @@ public class NewHashMap<K,V> extends AbstractMap<K,V>
 //            地址比较
             if (o == this)
                 return true;
+//            循环比较里面的key—value
             if (o instanceof Map.Entry) {
                 Map.Entry<?,?> e = (Map.Entry<?,?>)o;
                 if (Objects.equals(key, e.getKey()) &&
