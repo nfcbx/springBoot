@@ -19,7 +19,7 @@ public class ThreadDemo {
 
         thread2.start();
 
-        
+
 
     }
 
