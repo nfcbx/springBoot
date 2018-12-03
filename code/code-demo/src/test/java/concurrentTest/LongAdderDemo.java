@@ -28,6 +28,7 @@ public class LongAdderDemo {
         }, 1L);
 
         longAccumulator.accumulate(2L);
+
         longAccumulator.accumulate(3L);
 
         System.out.println(longAccumulator.longValue());
