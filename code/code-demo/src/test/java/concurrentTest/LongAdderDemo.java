@@ -2,7 +2,9 @@ package concurrentTest;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.LongAccumulator;
 import java.util.concurrent.atomic.LongAdder;
+import java.util.function.LongBinaryOperator;
 
 /**
  * Created by ZSX on 2018/11/26.
@@ -17,6 +19,20 @@ public class LongAdderDemo {
 
 
     public static void main(String[] args) {
+
+        LongAccumulator longAccumulator = new LongAccumulator(new LongBinaryOperator() {
+            @Override
+            public long applyAsLong(long left, long right) {
+                return left + right;
+            }
+        }, 1L);
+
+        longAccumulator.accumulate(2L);
+
+        longAccumulator.accumulate(3L);
+
+        System.out.println(longAccumulator.longValue());
+
 //        longAdder.increment();
 //        System.out.println(longAdder.longValue());
         LongAdderDemo demo = new LongAdderDemo();
@@ -49,7 +65,7 @@ public class LongAdderDemo {
         });
     }
 
-    public synchronized void addNum(){
+    public synchronized void addNum() {
         num += 1L;
     }
 
