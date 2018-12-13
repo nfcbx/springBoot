@@ -18,26 +18,29 @@ public class JodaTimeDemo {
 
 
     public static void test1() {
-        DateTime dateTime1 = new DateTime(2018, 1, 1, 0, 0);
-        DateTime dateTime2 = new DateTime(2018, 1, 2, 0, 0);
+        DateTime 一月一号 = new DateTime(2018, 1, 1, 0, 0);
+        DateTime 一月二号 = new DateTime(2018, 1, 2, 0, 0);
 
-        System.out.println(dateTime1.isBefore(dateTime2));
-        System.out.println(dateTime1.isEqual(dateTime2));
-        System.out.println(dateTime1.isAfter(dateTime2));
+//        比较
+        System.out.println(一月一号.isBefore(一月二号)); // true
+        System.out.println(一月一号.isEqual(一月二号)); // false
+        System.out.println(一月一号.isAfter(一月二号)); // false
 
-        System.out.println(dateTime1.toString("yyyyMM"));
-        System.out.println(dateTime2.toString("yyyyMM"));
+//        格式化
+        System.out.println(一月一号.toString("yyyyMM"));
 
-        System.out.println(dateTime1.toString("yyyyMM").equals(dateTime2.toString("yyyyMM")));
+        System.out.println(一月一号.toString("yyyyMM").equals(一月二号.toString("yyyyMM")));
 
-        System.out.println(dateTime2.minusDays(1));
+//        减一天
+        System.out.println(一月二号.minusDays(1)); // 2018-01-01T00:00:00.000+08:00
 
-        System.out.println(dateTime2.dayOfMonth().withMinimumValue());
+//        月初
+        System.out.println(一月二号.dayOfMonth().withMinimumValue());
 
+//        格式化函数
         DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
         DateTime parse = DateTime.parse("2012-12-21", formatter);
         System.out.println(parse);
-
     }
 
 
