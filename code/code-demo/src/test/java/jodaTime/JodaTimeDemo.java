@@ -51,14 +51,14 @@ public class JodaTimeDemo {
         DateTime 一月一号 = new DateTime(2018, 01, 01, 0, 0);
         DateTime 二月一号 = new DateTime(2018, 02, 01, 0, 0);
 
+//        得到两个日期的相差天数
         Period period = new Period(一月一号, 二月一号, PeriodType.days());
         int days = period.getDays();
-        System.out.println(days);
+        System.out.println(days); // 31
 
 
-        DateTime dateTime = 一月一号;
-//                    加减 宽限天数
-        dateTime = dateTime.plusDays(30);
-        System.out.println(dateTime);
+//       加 天数
+        一月一号 = 一月一号.plusDays(30);
+        System.out.println(一月一号); // 2018-01-31T00:00:00.000+08:00
     }
 }
