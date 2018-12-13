@@ -60,5 +60,9 @@ public class JodaTimeDemo {
 //       加 天数
         一月一号 = 一月一号.plusDays(30);
         System.out.println(一月一号); // 2018-01-31T00:00:00.000+08:00
+
+//        结果一样
+        System.out.println(一月一号.plusDays(-5)); // 2018-01-26T00:00:00.000+08:00
+        System.out.println(一月一号.minusDays(5)); // 2018-01-26T00:00:00.000+08:00
     }
 }
