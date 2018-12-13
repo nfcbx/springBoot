@@ -1,6 +1,8 @@
 package jodaTime;
 
 import org.joda.time.DateTime;
+import org.joda.time.Period;
+import org.joda.time.PeriodType;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -13,7 +15,8 @@ public class JodaTimeDemo {
 
 
     public static void main(String[] args) {
-        test1();
+//        test1();
+        test2();
     }
 
 
@@ -43,5 +46,19 @@ public class JodaTimeDemo {
         System.out.println(parse);
     }
 
+    public static void test2() {
 
+        DateTime 一月一号 = new DateTime(2018, 01, 01, 0, 0);
+        DateTime 二月一号 = new DateTime(2018, 02, 01, 0, 0);
+
+        Period period = new Period(一月一号, 二月一号, PeriodType.days());
+        int days = period.getDays();
+        System.out.println(days);
+
+
+        DateTime dateTime = 一月一号;
+//                    加减 宽限天数
+        dateTime = dateTime.plusDays(30);
+        System.out.println(dateTime);
+    }
 }
