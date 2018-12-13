@@ -35,6 +35,12 @@
             <version>4.0.0.Alpha8</version>
         </dependency>
 
+        <!-- jodaTime -->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.10.1</version>
+        </dependency>
 
         <dependency>
             <groupId>junit</groupId>
