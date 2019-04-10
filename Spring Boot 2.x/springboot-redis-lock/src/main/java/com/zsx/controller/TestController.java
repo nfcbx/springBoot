@@ -1,7 +1,9 @@
 package com.zsx.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.zsx.config.RedisLock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,9 +37,13 @@ public class TestController {
     public void test() throws Exception {
 //      模拟抢单用户，10w个
         List<String> userList = new ArrayList<>(100000);
-        IntStream.range(0, 100000).parallel().forEach(i -> {
+//        IntStream.range(0, 100000).parallel().forEach(i -> {
+//            userList.add("user-" + i);
+//        });
+        IntStream.range(0, 100000).forEach(i -> {
             userList.add("user-" + i);
         });
+        System.out.println(userList.size());
 //      抢到商品的用户
         List<String> luckyUsers = new ArrayList<>(100);
 
@@ -45,17 +51,34 @@ public class TestController {
 
         for (int i = 0; i < userList.size(); i++) {
             String userId = userList.get(i);
+            System.out.println("----------------------------------    "+userId);
             executorService.execute(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        get(userId);
+                        System.out.println("用户: " + userId + " 开抢了");
+                        String str = get(userId);
+                        if (!StringUtils.isEmpty(str)) {
+                            luckyUsers.add(str);
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             });
         }
+
+        executorService.shutdown();
+
+        while (!executorService.isTerminated()) {
+            System.out.println("线程还没执行结束呢");
+            TimeUnit.SECONDS.sleep(1L);
+        }
+        System.out.println("线程执行结束...");
+
+        luckyUsers.forEach(obj -> {
+            System.out.println(obj);
+        });
 
     }
 
