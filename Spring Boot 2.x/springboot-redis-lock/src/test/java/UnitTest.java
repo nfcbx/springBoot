@@ -38,9 +38,12 @@ public class UnitTest {
     // 商品key
     private static String goodsKey = "goodsKey";
     // 商品库存量
-    private static int goodsTotal = 50;
+    private static int goodsTotal = 100;
     // 模拟用户量  1w乘以
     private static int userTotal = 10000 * 10;
+
+    private static Long startTime = System.currentTimeMillis();
+    private static Long endTime = System.currentTimeMillis();
 
 
     @Test
@@ -60,6 +63,8 @@ public class UnitTest {
 
 
         ExecutorService executorService = Executors.newFixedThreadPool(10);
+
+        startTime = System.currentTimeMillis();
 
         for (int i = 0, len = userList.size(); i < len; i++) {
             String userId = userList.get(i);
@@ -88,6 +93,8 @@ public class UnitTest {
         luckyUserList.forEach(obj -> {
             System.out.println(obj);
         });
+
+        System.out.println("秒杀活动总耗时：" + ((endTime - startTime) / 1000) + " 秒");
     }
 
 
@@ -127,6 +134,9 @@ public class UnitTest {
                     //抢单成功跳出
                     logger.info("用户 {} 抢单成功跳出...所剩库存：{}", userId, goodsTotal);
 
+                    if (goodsTotal == 0) {
+                        endTime = System.currentTimeMillis();
+                    }
                     return userId + "抢单成功，所剩库存：" + goodsTotal;
                 } finally {
                     logger.info("用户 {} 释放锁...", userId);
