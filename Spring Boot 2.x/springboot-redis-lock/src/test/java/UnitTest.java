@@ -150,4 +150,56 @@ public class UnitTest {
         return null;
     }
 
+
+    /**
+     * 这个方法有问题
+     *
+     * @throws Exception
+     */
+    @Test
+    public void test2() throws Exception {
+
+        userTotal = 10;
+        goodsTotal = 1;
+
+//        创建模拟抢单用户
+        ArrayList<String> userList = Lists.newArrayListWithCapacity(userTotal);
+
+        IntStream.range(1, userTotal).forEach(i -> {
+            userList.add("用户-" + i);
+        });
+
+        logger.info("抢单用户总人数为：{}", userList.size());
+
+//        秒到商品的用户
+        ArrayList<String> luckyUserList = Lists.newArrayListWithCapacity(goodsTotal);
+
+        startTime = System.currentTimeMillis();
+
+        userList.parallelStream().forEach(userId -> {
+            logger.info("for get userId --->  {}", userId);
+            logger.info("用户: {} 开抢了", userId);
+            String str = flashSale(userId);
+            if (!StringUtils.isEmpty(str)) {
+                luckyUserList.add(str);
+            }
+        });
+
+        TimeUnit.SECONDS.sleep(20L);
+
+//        while (!executorService.isTerminated()) {
+//            logger.warn("线程还没执行结束呢");
+//            TimeUnit.SECONDS.sleep(1L);
+//        }
+        logger.info("线程执行结束...");
+
+        luckyUserList.forEach(obj -> {
+            System.out.println(obj);
+        });
+
+        System.out.println("秒杀活动总耗时：" + ((endTime - startTime) / 1000) + " 秒");
+
+
+    }
+
 }
