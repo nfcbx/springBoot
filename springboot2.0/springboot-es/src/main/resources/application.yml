@@ -2,10 +2,7 @@ server:
   port: 9999
 
 
-
-
-
-
+# 自定义配置
 cluster:
   name: zsx-es
 
