@@ -7,38 +7,17 @@
   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd"
        default-autowire="byName">
 
-   <context:component-scan base-package="com.jdjr.risk.heron" />
-   <context:component-scan base-package="com.jd.payment.common.util"/>
+    <context:component-scan base-package="com.zsx"/>
 
 
-   <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-      <property name="locations">
-         <list>
-            <value>classpath:db.properties</value>
-            <value>classpath:redis.properties</value>
-            <value>classpath:jsf.properties</value>
-            <value>classpath:mail.properties</value>
-            <value>classpath:mq.properties</value>
-            <value>classpath:jcloud.properties</value>
-            <value>classpath:key.properties</value>
-            <value>classpath:sso.properties</value>
-            <value>classpath:es.properties</value>
-         </list>
-      </property>
-      <property name="ignoreUnresolvablePlaceholders" value="true" />
-   </bean>
+    <bean id="esService" class="com.zsx.service.impl.EsServiceImpl"/>
 
-   <import resource="classpath*:/spring/jmq-producer.xml" />
-   <import resource="classpath*:/spring/jmq-consumer.xml" />
-   <import resource="classpath*:/spring/springMVC-servlet.xml" />
-   <import resource="classpath*:/spring/springMVC-interceptor.xml" />
-   <import resource="classpath*:/spring/spring-heron-datasource.xml" />
-   <import resource="classpath*:/spring/spring-jcloud.xml" />
-   <import resource="classpath*:/spring/jsf-consumer.xml" />
-   <import resource="classpath*:/spring/jsf-provider.xml" />
-   <import resource="classpath*:/spring/spring-jes.xml" />
 
-   <mvc:resources location="classpath:/META-INF/resources/" mapping="swagger-ui.html"/>
-   <mvc:resources location="classpath:/META-INF/resources/webjars/" mapping="/webjars/**"/>
+    <!-- 定义bean -->
+    <bean id="esClient" class="com.zsx.config.TransportClientFactory">
+        <property name="clusterName" value="${cluster.name}"/>
+        <property name="nodeIpInfo" value="${esNodeInfo}"/>
+    </bean>
+
 
 </beans>

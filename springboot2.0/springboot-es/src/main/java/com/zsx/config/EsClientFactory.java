@@ -1,43 +1,54 @@
-package com.qdingnet.pcloud.helper.es;
+package com.zsx.config;
 
-import com.qdingnet.pcloud.helper.utils.ConfigUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.transport.client.PreBuiltTransportClient;
+
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 
 /**
  * Created by QDHL on 2017/6/6.
  */
 public class EsClientFactory {
-    private static String esHostMaster = null;
-    private static Integer esPortMaster;
-    private static String esHostSlave;
-    private static Integer esPortSlave;
+    private static String esHost = null;
+    private static Integer esPort;
     private static String clusterName;
 
 
     private static void initParams() {
-        if (StringUtils.isBlank(esHostMaster)) {
-            esHostMaster = ConfigUtil.getAttribute("esHostMaster");
-            esPortMaster = Integer.parseInt(ConfigUtil.getAttribute("esPortMaster"));
-            esHostSlave = ConfigUtil.getAttribute("esHostSlave");
-            esPortSlave = Integer.parseInt(ConfigUtil.getAttribute("esPortSlave"));
-            clusterName = ConfigUtil.getAttribute("clusterName");
+        if (null == esHost) {
+            esHost = "localhost";
+            esPort = 9300;
+            clusterName = "zsx-es";
         }
     }
 
     public static Client getClient() throws Exception {
         initParams();
-        Settings settings = ImmutableSettings.settingsBuilder()
-                .put("cluster.name", clusterName)
-                .put("client.transport.sniff", true)
+        System.out.println(esHost);
+
+        Settings settings = Settings.builder()
+                .put("cluster.name", clusterName) // 设置集群名称
+//                .put("client.transport.ping_timeout", "20s")
+//                .put("client.transport.sniff", true)
                 .build();
-        Client client = new TransportClient(settings)
-                .addTransportAddress(new InetSocketTransportAddress(esHostMaster, esPortMaster))
-                .addTransportAddress(new InetSocketTransportAddress(esHostSlave, esPortSlave));
+
+
+        TransportClient client = new PreBuiltTransportClient(settings);
+
+
+
+//        InetSocketAddress inetSocketAddress = new InetSocketAddress(esHost, esPort);
+//        client.addTransportAddress(new InetSocketTransportAddress(inetSocketAddress));
+
+        InetSocketTransportAddress inetSocketTransportAddress = new InetSocketTransportAddress(InetAddress.getByName(esHost), esPort);
+        client.addTransportAddress(inetSocketTransportAddress);
+
+        client.connectedNodes();
+
         return client;
     }
 
