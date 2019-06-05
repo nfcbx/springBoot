@@ -17,6 +17,8 @@
     <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
     <script type="text/javascript" charset="utf-8" src="/js/ueditor-1.4.3.3/lang/zh-cn/zh-cn.js"></script>
 
+    <script type="text/javascript" charset="utf-8" src="/js/jquery.min.js"></script>
+
     <style type="text/css">
         div {
             width: 100%;
@@ -55,6 +57,13 @@
         <button onclick="getLocalData()">获取草稿箱内容</button>
         <button onclick="clearLocalData()">清空草稿箱</button>
     </div>
+
+    <div>
+        <button onclick="saveText()">保存数据到后台</button>
+    </div>
+
+
+
 
 </div>
 <div>
@@ -188,6 +197,22 @@
     function clearLocalData() {
         UE.getEditor('editor').execCommand("clearlocaldata");
         alert("已清空草稿箱")
+    }
+
+    function saveText(){
+        var text = UE.getEditor('editor').getContent()
+
+        $.post(
+            "/getContent",
+            {
+                content: text
+            },
+            function(data, status) {
+                console.log(status)
+                console.log(data)
+            }
+        );
+
     }
 </script>
 </body>
