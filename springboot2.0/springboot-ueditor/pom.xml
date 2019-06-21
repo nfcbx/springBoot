@@ -111,6 +111,8 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
+            <!-- 这里的<optional>true</optional>是表示依赖不会传递 -->
+            <optional>true</optional>
             <scope>runtime</scope>
         </dependency>
 
