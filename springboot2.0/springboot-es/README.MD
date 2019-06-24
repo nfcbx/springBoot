@@ -2,6 +2,7 @@
 
 
 
+先放一下之前用工具类方式获取esClient的写法：
 
 ```
 private static String esHost = null;
@@ -34,7 +35,13 @@ public static void closeClient(Client esClient){
     }
 }
 ```
+上面这种方式的缺点就是每次需要手动关闭连接，很麻烦。
 
+---
+
+下面我们用spring管理esClient的方式。
+
+首先我们定义一个获取esClient的工厂类，在里面我们实现创建连接和销毁连接的方法
 
 ```
 package com.zsx.config;
@@ -158,24 +165,62 @@ public class TransportClientFactory extends AbstractFactoryBean<Client> {
 
 ```
 
-
-
-```
-<bean id="esClient" class="com.zsx.config.TransportClientFactory">
-    <property name="clusterName" value="${cluster.name}"/>
-    <property name="nodeIpInfo" value="${esNodeInfo}"/>
-</bean>
-```
-
-
+在application.yml里面配置es连接信息
 
 ```
 # 自定义配置
 cluster:
-  name: zsx-es
+  name: es-name
 
 esNodeInfo: localhost:9300
 ```
+
+
+注意，这里如果是集群模式的话，配置项esNodeInfo，可以用英文逗号连接集群ip加端口号，例如：`ip1:9300,ip2:9300,ip3:9300`
+
+
+我们在 `src\main\resources\spring`目录下创建一个`spring.xml`的配置文件，里面代码如下：
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd"
+       default-autowire="byName">
+
+    <context:component-scan base-package="com.zsx"/>
+
+
+    <bean id="esService" class="com.zsx.service.impl.EsServiceImpl"/>
+
+
+    <!-- 定义bean -->
+    <bean id="esClient" class="com.zsx.config.TransportClientFactory">
+        <property name="clusterName" value="${cluster.name}"/>
+        <property name="nodeIpInfo" value="${esNodeInfo}"/>
+    </bean>
+
+
+</beans>
+```
+
+重点是这个bean
+
+```
+<!-- 定义bean -->
+<bean id="esClient" class="com.zsx.config.TransportClientFactory">
+    <property name="clusterName" value="${cluster.name}"/>
+    <property name="nodeIpInfo" value="${esNodeInfo}"/>
+</bean>
+```    
+
+这样我们就可以把esClient工厂类放到spring容器里管理了。
+
+
+因为项目是springBoot，所以需要下面导入xml配置
 
 ```
 import org.springframework.context.annotation.Configuration;
@@ -190,6 +235,7 @@ public class AppSpringConfig implements WebMvcConfigurer {
 
 ```
 
+最后，就可以像引入一个bean的方式使用esClient了。
 
 ```
 @Autowired
@@ -198,12 +244,14 @@ private Client client;
 ```    
 
 
+```   
+使用es的api
 
 client.admin().indices().prepareExists(indexName).get();
+```   
 
 
-
-
+下面是maven依赖的包，其中需要注意 transport-netty4-client 包的冲突问题。
 
 ```
 <dependency>
@@ -228,10 +276,11 @@ client.admin().indices().prepareExists(indexName).get();
 ```
 
 
-
+---
 
 
 参考文档：
+
 
 https://blog.csdn.net/levae1024/article/details/79584246
 
