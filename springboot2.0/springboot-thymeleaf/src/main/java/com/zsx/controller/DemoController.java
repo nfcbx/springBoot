@@ -33,6 +33,9 @@ public class DemoController {
             users.add(user);
         }
 
+        map.put("users", users);
+
+
         return "index";
     }
 
