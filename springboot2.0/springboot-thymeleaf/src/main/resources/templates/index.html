@@ -1,10 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>测试</title>
 </head>
 <body>
-$END$
+
+你好！ <span th:text="${name}">test</span>
+
+<footer th:text="${date}"></footer>
+
+<h2>URL</h2>
+
+<a th:href="@{url}">http://www.com</a>
+
+<h2>条件求值</h2>
+<a th:href="@{url}" th:unless="${url} != null">链接</a>
+
+<h2>for 循环</h2>
+
+<ul th:each="user:${users}">
+    <li th:text="${user.name}">name</li>
+    <li th:text="${user.age}">age</li>
+    <li th:text="${user.flag}?#{true}:#{false}">falg</li>
+</ul>
+
+<h2>字符串拼接</h2>
+<span th:text="'你好, ' + ${name} + '!'"></span>
+
+<h2>字符串拼接 的另一种写法</h2>
+<span th:text="|你好, ${name}!|"></span>
+
+
+
+
 </body>
 </html>
