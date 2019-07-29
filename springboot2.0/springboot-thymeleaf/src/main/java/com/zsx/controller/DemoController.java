@@ -27,8 +27,8 @@ public class DemoController {
         for (int i = 0; i < 3; i++) {
             Map<Object, Object> user = new HashMap<>();
             user.put("name", "name" + i);
-            user.put("age", new Random().nextInt());
-            user.put("flag", i%2==0);
+            user.put("age", new Random().nextInt(10));
+            user.put("flag", (i%2==0));
 
             users.add(user);
         }

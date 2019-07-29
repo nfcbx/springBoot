@@ -12,18 +12,19 @@
 
 <h2>URL</h2>
 
-<a th:href="@{url}">http://www.com</a>
+<a th:href="${url}">http://www.com</a>
 
 <h2>条件求值</h2>
-<a th:href="@{url}" th:unless="${url} != null">链接</a>
+<a th:href="${url}" th:if="${url} != null">链接</a>
 
 <h2>for 循环</h2>
 
 <ul th:each="user:${users}">
     <li th:text="${user.name}">name</li>
     <li th:text="${user.age}">age</li>
-    <li th:text="${user.flag}?#{true}:#{false}">falg</li>
+    <li th:text="${user.flag}">falg</li>
 </ul>
+
 
 <h2>字符串拼接</h2>
 <span th:text="'你好, ' + ${name} + '!'"></span>
