@@ -1,1 +1,11 @@
+server:
+  port: 48080
 
+
+spring:
+  datasource:
+    name: demo
+    driver-class-name: org.apache.derby.jdbc.EmbeddedDriver
+    url: jdbc:derby:derby_db_${random.int[1024,65536]}/demo_db;create=true
+    username: root
+    password: root
