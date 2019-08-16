@@ -23,8 +23,8 @@ public class Demo111 {
     public static ArrayList<List<int[]>> getImagePixel() {
         int[] rgb = new int[3];
 //        File file = new File("D:/tmp/155376460130.jpg");
-//        File file = new File("D:/tmp/11.jpg");
-        File file = new File("D:/tmp/22.png");
+        File file = new File("D:/tmp/1.jpg");
+//        File file = new File("D:/tmp/22.png");
         BufferedImage bi = null;
         try {
             bi = ImageIO.read(file);
