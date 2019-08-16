@@ -94,6 +94,14 @@
             <version>4.5.5</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- excel工具-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel</artifactId>
+            <version>1.1.2-beta5</version>
+        </dependency>
+
     </dependencies>
 
 
