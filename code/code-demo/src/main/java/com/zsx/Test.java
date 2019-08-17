@@ -77,14 +77,20 @@ public class Test {
 
         for (List<int[]> sublist : list) {
             for (int[] rgb : sublist) {
+                if (rgb[0] > 250 && rgb[1] > 250 && rgb[2] > 250) {
+                    continue;
+                }
+
                 String str = rgb[0] + "," + rgb[1] + "," + rgb[2];
+
                 set.add(str);
                 rgbMap.put(str, rgb);
             }
         }
 
         System.out.println("8899 set: " + set.size());
-        System.out.println("8899 rgbMap: " + rgbMap.size());
+        int total = rgbMap.size();
+        System.out.println("8899 rgbMap: " + total);
 
         if (set.size() == 64000) {
             System.out.println("颜色值超过了64000");
@@ -98,14 +104,19 @@ public class Test {
         for (Map.Entry<String, int[]> entry : rgbMap.entrySet()) {
             String key = entry.getKey();
             int[] rgb = entry.getValue();
+            byte[] rgbByte = new byte[3];
+            rgbByte[0] = (byte) rgb[0];
+            rgbByte[1] = (byte) rgb[1];
+            rgbByte[2] = (byte) rgb[2];
 
             XSSFCellStyle cellStyle = workbook.createCellStyle();
-            Color color = new Color(rgb[0], rgb[1], rgb[2]);
-            cellStyle.setFillForegroundColor(new XSSFColor(color));
+//            Color color = new Color(rgb[0], rgb[1], rgb[2]);
+            cellStyle.setFillForegroundColor(new XSSFColor(rgbByte, new DefaultIndexedColorMap()));
             cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
             colorMap.put(key, cellStyle);
-            System.out.println("colorMap.size() :   " + colorMap.size());
+            int num = colorMap.size();
+            System.out.println("colorMap.size() :   " + num + "    进度：" + ((num * 100) / total) + "%");
         }
 
         return colorMap;
@@ -207,6 +218,10 @@ public class Test {
                 System.out.print("               ");
                 XSSFCell cell = row.createCell(j);
                 int[] rgb = subList.get(j);
+
+                if (rgb[0] > 250 && rgb[1] > 250 && rgb[2] > 250) {
+                    continue;
+                }
                 String str = rgb[0] + "," + rgb[1] + "," + rgb[2];
 
 //                Color color = new Color(rgb[0], rgb[1], rgb[2]);
@@ -247,14 +262,17 @@ public class Test {
         System.out.println("defaultRowHeight :  " + defaultRowHeight);
         System.out.println("defaultRowHeightInPoints :  " + defaultRowHeightInPoints);
 
-        sheet.setDefaultColumnWidth(2);
-        sheet.setDefaultRowHeightInPoints(19);
+//        sheet.setDefaultColumnWidth(2);
+//        sheet.setDefaultRowHeightInPoints(19);
+
+        sheet.setDefaultColumnWidth(1);
+        sheet.setDefaultRowHeightInPoints(12);
 
         // TODO zsx
         createData(workbook, sheet);
 
         try {
-            FileOutputStream out = new FileOutputStream("D:/22.xlsx");
+            FileOutputStream out = new FileOutputStream("D:/2222.xlsx");
             workbook.write(out);
             out.close();
         } catch (FileNotFoundException e) {
