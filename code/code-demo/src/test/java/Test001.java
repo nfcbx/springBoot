@@ -1,4 +1,3 @@
-import net.sourceforge.pinyin4j.PinyinHelper;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -23,13 +22,13 @@ public class Test001 {
         }
         for (int j = 0; j < str.length(); j++) {
             char word = str.charAt(j);
-            String[] pinyinArray = PinyinHelper.toHanyuPinyinStringArray(word);
-            if (pinyinArray != null) {
-                convert += pinyinArray[0].charAt(0);
-                convert += pinyinArray[0].charAt(1);
-            } else {
-                convert += word;
-            }
+//            String[] pinyinArray = PinyinHelper.toHanyuPinyinStringArray(word);
+//            if (pinyinArray != null) {
+//                convert += pinyinArray[0].charAt(0);
+//                convert += pinyinArray[0].charAt(1);
+//            } else {
+//                convert += word;
+//            }
         }
         return convert.toUpperCase();
     }

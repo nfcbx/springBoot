@@ -51,11 +51,11 @@
         </dependency>
 
         <!-- 拼音 -->
-        <dependency>
-            <groupId>net.sourceforge.pinyin4j</groupId>
-            <artifactId>pinyin4j</artifactId>
-            <version>2.5.0</version>
-        </dependency>
+        <!--<dependency>-->
+        <!--<groupId>net.sourceforge.pinyin4j</groupId>-->
+        <!--<artifactId>pinyin4j</artifactId>-->
+        <!--<version>2.5.0</version>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -100,7 +100,30 @@
             <groupId>com.alibaba</groupId>
             <artifactId>easyexcel</artifactId>
             <version>1.1.2-beta5</version>
+            <exclusions>
+            <exclusion>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
+            </exclusion>
+            <exclusion>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+            </exclusion>
+        </exclusions>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>4.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>4.1.0</version>
+        </dependency>
+
+
 
     </dependencies>
 
