@@ -7,7 +7,11 @@
 4. 新建spring.factories文件，指定Starter的自动装配类；
 
 
-## 新建spring.factories文件，指定Starter的自动装配类
+
+
+
+
+## 4、新建spring.factories文件，指定Starter的自动装配类
 
 - spring.factories文件位于resources/META-INF目录下，需要手动创建;
 - org.springframework.boot.autoconfigure.EnableAutoConfiguration后面的类名说明了自动装配类，如果有多个 ，则用逗号分开;
