@@ -2,15 +2,17 @@ package 线程安全.CompletableFutureTest;
 
 import org.joda.time.LocalDateTime;
 
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 public class CompletableFutureDemo {
 
+    public static void main(String[] args) throws Exception {
+        CompletableFutureDemo demo = new CompletableFutureDemo();
+        demo.test1();
+    }
 
-    public static void main(String[] args) {
+
+    public void test() {
         final ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(2, 8, 10L, TimeUnit.SECONDS, new ArrayBlockingQueue<>(2));
 
         for (int i = 0; i < 10; i++) {
@@ -36,5 +38,15 @@ public class CompletableFutureDemo {
 
     public static String getNow() {
         return LocalDateTime.now().toString("yyyy-MM-dd HH:mm:ss");
+    }
+
+
+    public void test1() throws ExecutionException, InterruptedException {
+        CompletableFuture<String> future = new CompletableFuture<>();
+
+        future.complete("test");
+
+        String s = future.get();
+        System.out.println(s);
     }
 }
