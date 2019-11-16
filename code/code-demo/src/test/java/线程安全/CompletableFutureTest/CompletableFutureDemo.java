@@ -1,6 +1,7 @@
 package 线程安全.CompletableFutureTest;
 
 import org.joda.time.LocalDateTime;
+import org.junit.Test;
 
 import java.util.concurrent.*;
 
@@ -49,4 +50,37 @@ public class CompletableFutureDemo {
         String s = future.get();
         System.out.println(s);
     }
+
+    public void test2() throws Exception {
+//        runAsync 不需要返回结果
+        CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+
+        });
+
+
+
+    }
+    @Test
+    public void test3() throws Exception {
+//        supplyAsync 获取返回结果
+        CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> {
+            try {
+                TimeUnit.SECONDS.sleep(5L);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return "done";
+        });
+        System.out.println("1");
+        String str = future.get();
+        System.out.println("2");
+        System.out.println(str);
+    }
+    public void test4() throws Exception {}
+    public void test5() throws Exception {}
+    public void test6() throws Exception {}
+    public void test7() throws Exception {}
+    public void test8() throws Exception {}
+    public void test9() throws Exception {}
+    public void test10() throws Exception {}
 }
