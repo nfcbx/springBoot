@@ -23,24 +23,28 @@ public class CountDownLatchDemo2 {
 
         CountDownLatch countDownLatch = new CountDownLatch(6);
 
+        print("并行开始时间:" + getTime());
+
         for (int i = 0; i < 10; i++) {
             int n = i;
             executorService.execute(() -> {
                 runJob(n);
-
                 countDownLatch.countDown();
             });
         }
+        executorService.shutdown();
         print("打印位置  001");
         try {
             countDownLatch.await();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        print("打印位置  002");
-        executorService.shutdown();
+        print("并行结束时间:" + getTime());
 
-        print("打印位置  003");
+//        print("打印位置  002");
+
+
+//        print("打印位置  003");
     }
 
 
