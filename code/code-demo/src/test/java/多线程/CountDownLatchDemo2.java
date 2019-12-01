@@ -79,8 +79,10 @@ public class CountDownLatchDemo2 {
         // 任务总数
         int total = 10;
 
+        BlockingQueue<Runnable> queue = new LinkedBlockingQueue<>(2);
+
         ThreadPoolExecutor threadPoolExecutor =
-                new ThreadPoolExecutor(4, 8, 5L, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
+                new ThreadPoolExecutor(2, 8, 5L, TimeUnit.SECONDS, queue);
 
         ArrayList<CompletableFuture<String>> resultList = Lists.newArrayList();
 
