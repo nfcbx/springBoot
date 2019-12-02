@@ -110,7 +110,7 @@ public class CountDownLatchDemo2 {
 
         try {
             print("开始等待计数器为0");
-            countDownLatch.await();
+            countDownLatch.await(10L, TimeUnit.SECONDS);
             print("计数器已经为0");
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -119,11 +119,14 @@ public class CountDownLatchDemo2 {
         print("执行完成，开始打印结果");
         for (CompletableFuture<String> completableFuture : resultList) {
             try {
-                String res = completableFuture.get();
+//                String res = completableFuture.get();
+                String res = completableFuture.get(5L, TimeUnit.SECONDS);
                 print("结果为： " + res);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (TimeoutException e) {
                 e.printStackTrace();
             }
         }
