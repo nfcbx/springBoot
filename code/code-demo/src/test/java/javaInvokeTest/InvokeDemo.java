@@ -82,4 +82,16 @@ public class InvokeDemo {
 
         System.out.println(JSON.toJSONString(invoke));
     }
+
+
+    @Test
+    public void test3() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Method method = this.getClass().getDeclaredMethod("getData", Map.class);
+
+        HashMap<Object, Object> map = Maps.newHashMap();
+
+        Object invoke = method.invoke(this, map);
+
+        System.out.println(invoke);
+    }
 }
