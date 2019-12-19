@@ -1,14 +1,13 @@
 package poiDemo;
 
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
+import org.junit.Test;
+
+import java.io.*;
 
 public class CsvDemo {
 
-    public static void main(String[] args) throws Exception {
-
+    @Test
+    public void test1() throws Exception {
 
         FileOutputStream fileOutputStream = new FileOutputStream("D://1.csv");
 
@@ -25,10 +24,33 @@ public class CsvDemo {
         outputStream.newLine();
 
 
+        outputStream.write("赵,");
+        outputStream.write("29,");
+        outputStream.write("pwd");
 
-        outputStream.flush();;
+        outputStream.flush();
+        ;
 
+        outputStream.close();
 
+    }
+
+    @Test
+    public void test2() {
+        try {
+            File csv = new File("D:/2.csv"); // CSV数据文件
+
+            BufferedWriter bw = new BufferedWriter(new FileWriter(csv, true)); // 附加
+            // 添加新的数据行
+            bw.write("\"姓名\"" + "," + "\"test\"" + "," + "\"2020\"");
+            bw.newLine();
+            bw.close();
+            // 这个有乱码
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
