@@ -68,12 +68,9 @@ public class CsvDemo {
 
         List<List<String>> list = Lists.newArrayListWithCapacity(行数);
 
-
         IntStream.range(1, 行数).forEach(i -> {
             System.out.println(i);
-            List<String> row = Lists.newArrayList();
-            this.createRow(row, 列数);
-
+            List<String> row = this.createRow(i, 列数);
             list.add(row);
         });
 
@@ -83,10 +80,15 @@ public class CsvDemo {
         });
     }
 
-    private void createRow(List<String> row, int num) {
-        IntStream.range(1, num).forEach(i -> {
-            row.add("第" + i + "列 " + i);
+    private List<String> createRow(int rowNum, int columnNum) {
+        List<String> row = Lists.newArrayList();
+        columnNum += 1;
+        IntStream.range(1, columnNum).forEach(i -> {
+            StringBuilder str = new StringBuilder();
+            str.append("第").append(rowNum).append("行 第").append(i).append("列");
+            row.add(str.toString());
         });
+        return row;
     }
 
 
