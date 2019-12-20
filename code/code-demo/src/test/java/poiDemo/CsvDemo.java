@@ -3,6 +3,7 @@ package poiDemo;
 import org.junit.Test;
 
 import java.io.*;
+import java.util.stream.IntStream;
 
 public class CsvDemo {
 
@@ -52,6 +53,14 @@ public class CsvDemo {
             e.printStackTrace();
         }
 
+    }
+
+
+    @Test
+    public void createData(){
+        IntStream.range(1, 10).forEach(i -> {
+            System.out.println(i);
+        });
     }
 
 
