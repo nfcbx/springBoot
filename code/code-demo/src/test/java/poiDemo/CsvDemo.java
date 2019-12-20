@@ -1,8 +1,12 @@
 package poiDemo;
 
+import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Lists;
 import org.junit.Test;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.IntStream;
 
 public class CsvDemo {
@@ -57,9 +61,31 @@ public class CsvDemo {
 
 
     @Test
-    public void createData(){
-        IntStream.range(1, 10).forEach(i -> {
+    public void createData() {
+        int 列数 = 10;
+
+        int 行数 = 1000;
+
+        List<List<String>> list = Lists.newArrayListWithCapacity(行数);
+
+
+        IntStream.range(1, 行数).forEach(i -> {
             System.out.println(i);
+            List<String> row = Lists.newArrayList();
+            this.createRow(row, 列数);
+
+            list.add(row);
+        });
+
+        System.out.println(list.size());
+        list.forEach(obj -> {
+            System.out.println(JSON.toJSONString(obj));
+        });
+    }
+
+    private void createRow(List<String> row, int num) {
+        IntStream.range(1, num).forEach(i -> {
+            row.add("第" + i + "列 " + i);
         });
     }
 
