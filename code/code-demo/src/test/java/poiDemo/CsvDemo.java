@@ -5,6 +5,11 @@ import com.google.common.collect.Lists;
 import org.junit.Test;
 
 import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetEncoder;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -59,9 +64,47 @@ public class CsvDemo {
 
     }
 
+    @Test
+    public void 写数据() {
+        long start = System.currentTimeMillis();
+        List<List<String>> data = this.createData();
+        String filePath = "D://1.csv";
+        File file = new File(filePath);
+        while (file.exists()) {
+            file.delete();
+        }
+
+//        Path path = Paths.get("D://1.csv");
+//        try (BufferedWriter writer = Files.newBufferedWriter(path, Charset.forName("UTF-8"))) { // 这个还是有乱码
+//        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File("D://1.csv")), "GBK"))) { // 用utf-8依然乱码
+//        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) { // 这个还是有乱码
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("D://1.csv", true), "UTF-8"))) {
+
+            for (List<String> row : data) {
+                StringBuilder cellStr = new StringBuilder();
+                for (String cell : row) {
+                    cellStr.append(cell).append(",");
+                }
+                writer.write(cellStr.toString());
+                writer.newLine();
+            }
+
+            writer.write("结束");
+            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        long end = System.currentTimeMillis();
+        System.out.println("耗时：" + (end - start) / 1000L + "秒");
+    }
 
     @Test
-    public void createData() {
+    public void test22() {
+        this.createData();
+    }
+
+
+    public List<List<String>> createData() {
         int 列数 = 10;
 
         int 行数 = 1000;
@@ -78,6 +121,8 @@ public class CsvDemo {
         list.forEach(obj -> {
             System.out.println(JSON.toJSONString(obj));
         });
+
+        return list;
     }
 
     private List<String> createRow(int rowNum, int columnNum) {
