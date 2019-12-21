@@ -5,8 +5,10 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.junit.Test;
 
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 public class CsvApacheDemo {
@@ -14,12 +16,13 @@ public class CsvApacheDemo {
 
     @Test
     public void createCSVFile() throws IOException {
-        ArrayList<String> list = Lists.newArrayList("aaa", "bbb", "ccc", "ddd");
+        ArrayList<String> list = Lists.newArrayList("中文", "中文", "中文", "中文");
 
-        FileWriter writer = new FileWriter("D://3.csv");
+//        FileWriter writer = new FileWriter("D://3.csv");
+        OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream("D://3.csv", true), "UTF-8");
 
         CSVPrinter printer = new CSVPrinter(writer, CSVFormat.DEFAULT);
-
+        printer.printRecord(new String(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF}));
         list.forEach(obj -> {
             try {
                 printer.printRecord(obj, obj, obj);
