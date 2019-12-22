@@ -1,8 +1,15 @@
 package poiDemo.csv;
 
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.xssf.streaming.SXSSFCell;
+import org.apache.poi.xssf.streaming.SXSSFRow;
+import org.apache.poi.xssf.streaming.SXSSFSheet;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class CsvDemo2 {
 
@@ -13,7 +20,7 @@ public class CsvDemo2 {
      *
      * @param args
      */
-    public static void main(String[] args) {
+    public static void main2(String[] args) {
 
         List<List<String>> data = createData();
         String filePath = "D://demo.csv";
@@ -44,6 +51,44 @@ public class CsvDemo2 {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        long end = System.currentTimeMillis();
+        System.out.println("耗时：" + (end - start) / 1000L + "秒");
+    }
+
+    /**
+     * 生成数据耗时：7秒
+     * 耗时：28秒
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        SXSSFWorkbook workbook = new SXSSFWorkbook();
+        SXSSFSheet sheet = workbook.createSheet("测试");
+//        定义在外部，使对象持有一个引用，每当新创建一个对象时候原来引用失效jvm会自动回收
+        SXSSFRow row = null;
+        SXSSFCell cell = null;
+
+        List<List<String>> data = createData();
+
+        long start = System.currentTimeMillis();
+
+        for (int i = 0; i < data.size(); i++) {
+            row = sheet.createRow(i);
+            List<String> list = data.get(i);
+            for (int j = 0; j < list.size(); j++) {
+                cell = row.createCell(j, CellType.STRING);
+                cell.setCellValue(list.get(j));
+            }
+        }
+        try (FileOutputStream out = new FileOutputStream("D:/demo.xlsx");) {
+            workbook.write(out);
+            workbook.dispose();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         long end = System.currentTimeMillis();
         System.out.println("耗时：" + (end - start) / 1000L + "秒");
     }
