@@ -1,4 +1,4 @@
-package poiDemo;
+package poiDemo.csv;
 
 import com.opencsv.CSVWriterBuilder;
 import com.opencsv.ICSVWriter;

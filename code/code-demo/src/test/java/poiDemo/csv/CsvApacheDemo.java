@@ -1,4 +1,4 @@
-package poiDemo;
+package poiDemo.csv;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.csv.CSVFormat;
