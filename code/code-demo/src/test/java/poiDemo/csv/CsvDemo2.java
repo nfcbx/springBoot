@@ -6,21 +6,30 @@ import java.util.List;
 
 public class CsvDemo2 {
 
+
+    /**
+     * 生成数据耗时：8秒
+     * 耗时：5秒
+     *
+     * @param args
+     */
     public static void main(String[] args) {
 
-        long start = System.currentTimeMillis();
         List<List<String>> data = createData();
-        String filePath = "demo.csv";
+        String filePath = "D://demo.csv";
+        String gbk = "GBK";
         File file = new File(filePath);
         while (file.exists()) {
             file.delete();
         }
 
+        long start = System.currentTimeMillis();
+
 //        Path path = Paths.get("D://1.csv");
 //        try (BufferedWriter writer = Files.newBufferedWriter(path, Charset.forName("UTF-8"))) { // 这个还是有乱码
 //        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File("D://1.csv")), "GBK"))) { // 用utf-8依然乱码
 //        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) { // 这个还是有乱码
-        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath, true), "UTF-8"))) {
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath, true), gbk))) {
 
             for (List<String> row : data) {
                 StringBuilder cellStr = new StringBuilder();
@@ -40,13 +49,16 @@ public class CsvDemo2 {
     }
 
     public static List<List<String>> createData() {
-        int 列数 = 2;
-        int 行数 = 5;
+        long start = System.currentTimeMillis();
+        int 列数 = 10;
+        int 行数 = 10000 * 100;
         List<List<String>> list = new ArrayList<>();
         for (int i = 0; i < 行数; i++) {
             List<String> row = createRow(i, 列数);
             list.add(row);
         }
+        long end = System.currentTimeMillis();
+        System.out.println("生成数据耗时：" + (end - start) / 1000L + "秒");
         return list;
     }
 
