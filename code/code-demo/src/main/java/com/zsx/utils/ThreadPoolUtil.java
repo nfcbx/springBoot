@@ -5,7 +5,10 @@ import java.util.concurrent.TimeUnit;
 
 public class ThreadPoolUtil {
 
-    
+    // 核心线程数
+    private int corePoolSize = 4;
+
+
 
     private static ThreadPoolExecutor threadPoolExecutor = null;
 
