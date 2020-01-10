@@ -14,7 +14,8 @@ public class CallableDemo1 {
 
             @Override
             public Object call() throws Exception {
-                return null;
+
+                return "test";
             }
         };
 
