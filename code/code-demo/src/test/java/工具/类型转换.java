@@ -1,4 +1,4 @@
-package 类型转换;
+package 工具;
 
 import org.junit.Test;
 
@@ -6,7 +6,7 @@ import org.junit.Test;
  * @author zhaoshuxue3
  * @Date 2019/7/24 15:38
  **/
-public class Test1 {
+public class 类型转换 {
 
 
     /**
