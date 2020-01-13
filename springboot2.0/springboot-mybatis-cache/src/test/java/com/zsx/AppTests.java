@@ -37,7 +37,6 @@ class AppTests {
 
         System.out.println();
 
-
         List<User> all2 = userService.getAll();
         System.out.println(8899);
         System.out.println(JSON.toJSONString(all2));
