@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
@@ -43,6 +44,7 @@ class AppTests {
     }
 
     @Test
+    @Transactional // 开启事务，一级缓存才生效
     void test2() {
         List<User> users = userDao.selectAll();
         System.out.println(8899);
