@@ -75,5 +75,6 @@
         from t_user
     </select>
 
-    <cache/>
+    <cache type="org.mybatis.caches.redis.RedisCache" />
+<!--    <cache/>-->
 </mapper>
