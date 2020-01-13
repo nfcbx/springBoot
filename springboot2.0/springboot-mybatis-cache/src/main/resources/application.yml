@@ -2,12 +2,12 @@
 
 
 
-# Êý¾Ý¿âÅäÖÃ
+# ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½ï¿½
 spring:
   datasource:
     name: test
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/test?characterEncoding=utf8&useSSL=true
+    url: jdbc:mysql://localhost:3306/test?characterEncoding=utf8&useSSL=true&serverTimezone=GMT
     username: root
     password: root
     type: com.zaxxer.hikari.HikariDataSource
@@ -34,7 +34,7 @@ spring:
         max-wait: 1
         max-idle: 8
         min-idle: 0
-    timeout: 0
+    timeout: 1000
 
 
 
@@ -42,6 +42,8 @@ spring:
 mybatis:
   config-location: classpath:mybatis/mybatis-config.xml
   mapper-locations: classpath:mybatis/mapper/*.xml
+#  configuration:
+#    cache-enabled: true
 
 
 
@@ -49,7 +51,7 @@ mybatis:
 
 
 
-# ´òÓ¡sql
+# ï¿½ï¿½Ó¡sql
 logging:
   level:
     com:

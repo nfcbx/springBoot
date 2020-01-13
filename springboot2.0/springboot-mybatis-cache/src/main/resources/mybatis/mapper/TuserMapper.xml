@@ -74,4 +74,6 @@
         <include refid="Base_Column_List"/>
         from t_user
     </select>
+
+    <cache/>
 </mapper>
