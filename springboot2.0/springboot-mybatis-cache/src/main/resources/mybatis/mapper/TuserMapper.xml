@@ -76,5 +76,8 @@
     </select>
 
     <cache type="org.mybatis.caches.redis.RedisCache" />
+
+    <cache type="org.apache.ibatis.cache.impl.PerpetualCache" eviction="LRU" flushInterval="12000"/>
+
 <!--    <cache/>-->
 </mapper>
