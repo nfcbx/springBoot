@@ -16,6 +16,8 @@ public class RedisTest {
     void test1() {
         String test = stringRedisTemplate.opsForValue().get("test");
         System.out.println(test);
+
+//        stringRedisTemplate.opsForHash().pu
     }
 
 }
