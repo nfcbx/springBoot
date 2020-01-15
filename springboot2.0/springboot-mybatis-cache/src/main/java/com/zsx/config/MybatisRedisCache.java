@@ -1,8 +1,14 @@
 package com.zsx.config;
 
 import org.apache.ibatis.cache.Cache;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 
 public class MybatisRedisCache implements Cache {
+
+    @Autowired
+    private static RedisTemplate<String, Object> redisTemplate;
+
 
     private final String id;
 
@@ -22,6 +28,9 @@ public class MybatisRedisCache implements Cache {
 
     @Override
     public Object getObject(Object key) {
+
+        System.out.println(redisTemplate);
+        System.out.println(redisTemplate.hasKey("name"));
         return null;
     }
 
