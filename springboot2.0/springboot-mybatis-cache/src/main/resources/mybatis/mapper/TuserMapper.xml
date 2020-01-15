@@ -79,7 +79,9 @@
 
 <!--    <cache type="org.apache.ibatis.cache.impl.PerpetualCache" eviction="LRU" flushInterval="12000"/>-->
 
-    <cache type="com.zsx.config.MybatisCache" />
+<!--    <cache type="com.zsx.config.MybatisCache" />-->
 
-<!--    <cache/>-->
+<!--    <cache flushInterval="5000" />-->
+
+    <cache/>
 </mapper>

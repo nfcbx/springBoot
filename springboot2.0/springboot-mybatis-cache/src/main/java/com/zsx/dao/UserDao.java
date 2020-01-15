@@ -12,6 +12,12 @@ import java.util.List;
 //@Mapper
 public interface UserDao {
 
+    int insert(User user);
+
+    int updateByPrimaryKey(User user);
+
+    int deleteByPrimaryKey(Long id);
+
     List<User> selectAll();
 
 }
