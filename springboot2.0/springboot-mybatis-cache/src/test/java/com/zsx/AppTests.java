@@ -22,7 +22,6 @@ class AppTests {
 
     Logger logger = LoggerFactory.getLogger(AppTests.class);
 
-
     @Autowired
     UserDao userDao;
     @Autowired
@@ -72,11 +71,11 @@ class AppTests {
 //        userDao.updateByPrimaryKey(user);
 
         // 新增测试
-//        User user = new User(null, "a", "a");
-//        userDao.insert(user);
+        User user = new User(null, "a", "a");
+        userDao.insert(user);
 
         // 删除测试
-        userDao.deleteByPrimaryKey(2L);
+//        userDao.deleteByPrimaryKey(2L);
 
         List<User> list2 = userService.getAll();
         logger.info("第二次查询数据：{}", JSON.toJSONString(list2));

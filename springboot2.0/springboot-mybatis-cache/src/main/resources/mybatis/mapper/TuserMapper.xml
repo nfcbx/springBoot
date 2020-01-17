@@ -81,7 +81,7 @@
 
 <!--    <cache type="com.zsx.config.MybatisCache" />-->
 
-    <cache type="com.zsx.config.MybatisRedisCache" />
+    <cache type="com.zsx.config.MybatisRedisCache" flushInterval="5000"/>
 
 <!--    <cache flushInterval="5000" />-->
 
