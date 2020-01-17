@@ -20,31 +20,36 @@ public class MybatisRedisCache implements Cache {
         return id;
     }
 
+
     @Override
     public void putObject(Object key, Object value) {
-
+        System.out.println("存入缓存");
+        redisTemplate.opsForHash().put(this.id, key, value);
     }
 
     @Override
     public Object getObject(Object key) {
-
-        System.out.println(redisTemplate);
-        System.out.println(redisTemplate.hasKey("name"));
-        return null;
+        System.out.println("获取缓存");
+        return redisTemplate.opsForHash().get(this.id, key);
     }
 
     @Override
     public Object removeObject(Object key) {
+        System.out.println("删除缓存");
+        redisTemplate.opsForHash().delete(this.id, key);
         return null;
     }
 
     @Override
     public void clear() {
-
+        System.out.println("清空缓存");
+        redisTemplate.delete(this.id);
     }
 
     @Override
     public int getSize() {
-        return 0;
+        Long size = redisTemplate.opsForHash().size(this.id);
+        System.out.println("获取缓存size : " + size);
+        return size.intValue();
     }
 }
