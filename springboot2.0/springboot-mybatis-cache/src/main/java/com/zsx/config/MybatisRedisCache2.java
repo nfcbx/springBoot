@@ -1,19 +1,14 @@
 package com.zsx.config;
 
-import com.zsx.util.SerializeUtil;
 import org.apache.ibatis.cache.Cache;
-import org.springframework.dao.DataAccessException;
-import org.springframework.data.redis.connection.RedisConnection;
-import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 
-public class MybatisRedisCache implements Cache {
+public class MybatisRedisCache2 implements Cache {
 
 
     private RedisTemplate<String, Object> redisTemplate = SpringContextUtil.getBean("redisTemplate", RedisTemplate.class);
@@ -21,7 +16,7 @@ public class MybatisRedisCache implements Cache {
 
     private final String id;
 
-    public MybatisRedisCache(String id) {
+    public MybatisRedisCache2(String id) {
         this.id = id;
     }
 
@@ -34,43 +29,33 @@ public class MybatisRedisCache implements Cache {
     @Override
     public void putObject(Object key, Object value) {
         System.out.println("存入缓存");
-        redisTemplate.execute((RedisCallback) connection -> {
-            connection.hSet(id.getBytes(), key.toString().getBytes(), SerializeUtil.serialize(value));
-            // 5秒后过期
-            connection.expire(id.getBytes(), 5L);
-            return null;
-        });
+        redisTemplate.opsForHash().put(this.id, key.toString(), value);
     }
 
     @Override
     public Object getObject(Object key) {
         System.out.println("获取缓存");
-        return redisTemplate.execute((RedisCallback) connection -> {
-            byte[] bytes = connection.hGet(id.getBytes(), key.toString().getBytes());
-            System.out.println(bytes);
-            return SerializeUtil.unserialize(bytes);
-        });
+        return redisTemplate.opsForHash().get(this.id, key.toString());
     }
 
     @Override
     public Object removeObject(Object key) {
         System.out.println("删除缓存");
-        return redisTemplate.execute((RedisCallback) connection -> connection.hDel(id.getBytes(), key.toString().getBytes()));
+        redisTemplate.opsForHash().delete(this.id, key.toString());
+        return null;
     }
 
     @Override
     public void clear() {
         System.out.println("清空缓存");
-        redisTemplate.execute((RedisCallback) connection -> connection.del(id.getBytes()));
+        redisTemplate.delete(this.id);
     }
 
     @Override
     public int getSize() {
-        System.out.println("获取缓存size : ");
-        return (Integer) redisTemplate.execute((RedisCallback) connection -> {
-            Map<byte[], byte[]> result = connection.hGetAll(id.getBytes());
-            return result.size();
-        });
+        Long size = redisTemplate.opsForHash().size(this.id);
+        System.out.println("获取缓存size : " + size);
+        return size.intValue();
     }
 
 
