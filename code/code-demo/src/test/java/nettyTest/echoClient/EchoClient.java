@@ -45,6 +45,7 @@ public class EchoClient {
                     });
             ChannelFuture cf = bootstrap.connect().sync();
 
+            
             cf.channel().closeFuture().sync();
         } finally {
             group.shutdownGracefully().sync();
