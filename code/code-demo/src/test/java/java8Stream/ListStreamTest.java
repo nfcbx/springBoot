@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.stream.IntStream;
 
 /**
  * @author zhaoshuxue3
@@ -20,9 +21,9 @@ public class ListStreamTest {
     @Test
     public void test1() throws Exception {
         ArrayList<Object> list = Lists.newArrayList();
-        list.add(1);
-        list.add(3);
-        list.add(2);
+        IntStream.rangeClosed(1, 10).parallel().forEach(i -> {
+            list.add(i);
+        });
 
         list.forEach(obj -> {
             System.out.println(obj);
@@ -33,6 +34,8 @@ public class ListStreamTest {
         list.parallelStream().forEachOrdered(obj -> {
             System.out.println(obj);
         });
+
+        System.out.println();
 
         list.stream().forEachOrdered(item -> {
             System.out.println(item);
