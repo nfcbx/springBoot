@@ -34,6 +34,10 @@ public class ListStreamTest {
             System.out.println(obj);
         });
 
+        list.stream().forEachOrdered(item -> {
+            System.out.println(item);
+        });
+
     }
 
 }
