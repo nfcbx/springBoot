@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.IntStream;
 
 /**
@@ -41,6 +42,18 @@ public class ListStreamTest {
             System.out.println(item);
         });
 
+    }
+
+    @Test
+    public void test2(){
+        CopyOnWriteArrayList<Object> list = Lists.newCopyOnWriteArrayList();
+        IntStream.rangeClosed(1, 10)
+//                .parallel()
+                .forEach(i -> {
+            list.add(i);
+        });
+
+        System.out.println(list);
     }
 
 }
