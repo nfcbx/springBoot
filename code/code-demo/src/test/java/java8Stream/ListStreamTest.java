@@ -21,10 +21,16 @@ public class ListStreamTest {
     public void test1() throws Exception {
         ArrayList<Object> list = Lists.newArrayList();
         list.add(1);
-        list.add(2);
         list.add(3);
+        list.add(2);
 
         list.forEach(obj -> {
+            System.out.println(obj);
+        });
+
+        System.out.println();
+
+        list.parallelStream().forEachOrdered(obj -> {
             System.out.println(obj);
         });
 
