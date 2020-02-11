@@ -1,10 +1,12 @@
 package java8Stream;
 
 import com.google.common.collect.Lists;
+import org.apache.poi.ss.formula.functions.T;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 /**
@@ -41,6 +43,15 @@ public class ListStreamTest {
         list.stream().forEachOrdered(item -> {
             System.out.println(item);
         });
+        System.out.println();
+
+        list.parallelStream().filter(item -> {
+            return (int) item > 5;
+        });
+
+        System.out.println(list);
+
+
 
     }
 
