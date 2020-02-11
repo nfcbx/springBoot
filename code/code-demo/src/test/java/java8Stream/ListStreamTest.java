@@ -1,6 +1,7 @@
 package java8Stream;
 
 import com.google.common.collect.Lists;
+import com.sun.xml.internal.bind.v2.TODO;
 import org.apache.poi.ss.formula.functions.T;
 import org.junit.Test;
 
@@ -45,6 +46,7 @@ public class ListStreamTest {
         });
         System.out.println();
 
+//        TODO
         list.parallelStream().filter(item -> {
             return (int) item > 5;
         });
