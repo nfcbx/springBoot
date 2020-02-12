@@ -50,21 +50,24 @@ public class ListStreamTest {
         list.parallelStream().filter(item -> {
             return (int) item > 5;
         });
-
         System.out.println(list);
 
+        list.parallelStream().sorted((obj1, obj2) -> {
+            return (int) obj1 - (int) obj2;
+        });
+        System.out.println(list);
 
 
     }
 
     @Test
-    public void test2(){
+    public void test2() {
         CopyOnWriteArrayList<Object> list = Lists.newCopyOnWriteArrayList();
         IntStream.rangeClosed(1, 10)
 //                .parallel()
                 .forEach(i -> {
-            list.add(i);
-        });
+                    list.add(i);
+                });
 
         System.out.println(list);
     }
