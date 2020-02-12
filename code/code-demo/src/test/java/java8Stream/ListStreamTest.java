@@ -57,6 +57,11 @@ public class ListStreamTest {
         });
         System.out.println(list);
 
+        boolean anyMatch = list.parallelStream().anyMatch(item -> {
+            return (int) item > 55;
+        });
+
+        System.out.println(anyMatch);
 
     }
 
