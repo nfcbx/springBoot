@@ -77,4 +77,16 @@ public class ListStreamTest {
         System.out.println(list);
     }
 
+    @Test
+    public void test3(){
+        IntStream intStream1 = IntStream.rangeClosed(1, 5);
+        IntStream intStream2 = IntStream.rangeClosed(10, 15);
+
+        IntStream intStream = IntStream.concat(intStream1, intStream2);
+
+        intStream.forEach(item -> {
+            System.out.println(item);
+        });
+    }
+
 }
