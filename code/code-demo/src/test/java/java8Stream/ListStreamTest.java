@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 
 /**
  * @author zhaoshuxue3
@@ -78,7 +79,7 @@ public class ListStreamTest {
     }
 
     @Test
-    public void test3(){
+    public void test3() {
         IntStream intStream1 = IntStream.rangeClosed(1, 5);
         IntStream intStream2 = IntStream.rangeClosed(10, 15);
 
@@ -87,6 +88,19 @@ public class ListStreamTest {
         intStream.forEach(item -> {
             System.out.println(item);
         });
+    }
+
+    @Test
+    public void test4() {
+        LongStream longStream = LongStream.builder()
+                .add(1L)
+                .add(3L)
+                .build();
+
+        longStream.forEach(item -> System.out.println(item));
+
+
+
     }
 
 }
