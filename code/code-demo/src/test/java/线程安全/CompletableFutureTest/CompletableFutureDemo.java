@@ -3,9 +3,14 @@ package 线程安全.CompletableFutureTest;
 import com.google.common.collect.Lists;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
+import org.junit.rules.Stopwatch;
 
+import java.time.Clock;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CompletableFutureDemo {
 
@@ -149,6 +154,29 @@ public class CompletableFutureDemo {
 
     @Test
     public void test6() throws Exception {
+
+
+        ArrayList<Integer> list = Lists.newArrayList(1, 2, 3, 4, 5);
+
+        List<CompletableFuture<Integer>> completableFutures = list.stream().map(item -> {
+            return CompletableFuture.supplyAsync(() -> {
+                return item + 10;
+            });
+        }).collect(Collectors.toList());
+
+        CompletableFuture<Void> futures = CompletableFuture.allOf(completableFutures.toArray(new CompletableFuture[completableFutures.size()]));
+
+        CompletableFuture<List<Integer>> futureList = futures.thenApply(v -> {
+            return completableFutures.stream().map(item -> {
+                return item.join();
+            }).collect(Collectors.toList());
+        });
+
+        List<Integer> result = futureList.join();
+
+        result.forEach(item -> System.out.println(item));
+
+
     }
 
     @Test
