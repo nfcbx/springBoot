@@ -164,7 +164,11 @@ public class CompletableFutureDemo {
             });
         }).collect(Collectors.toList());
 
-        CompletableFuture<Void> futures = CompletableFuture.allOf(completableFutures.toArray(new CompletableFuture[completableFutures.size()]));
+
+        CompletableFuture<Void> futures = CompletableFuture
+                .allOf(completableFutures
+                        .toArray(
+                                new CompletableFuture[completableFutures.size()]));
 
         CompletableFuture<List<Integer>> futureList = futures.thenApply(v -> {
             return completableFutures.stream().map(item -> {
