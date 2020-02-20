@@ -185,6 +185,7 @@ public class CompletableFutureDemo {
 
     @Test
     public void test7() throws Exception {
+        System.out.println();
     }
 
     @Test
