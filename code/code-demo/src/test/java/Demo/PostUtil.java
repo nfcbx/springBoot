@@ -1,6 +1,7 @@
 package Demo;
 
 import com.alibaba.fastjson.JSONObject;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,6 +10,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.List;
+import java.util.Map;
 
 public class PostUtil {
 
@@ -81,5 +84,61 @@ public class PostUtil {
         }
         return null;
     }
+
+
+    @Test
+    public void post1() {
+        String url = "";
+        String params = "";
+        try {
+            URL wsUrl = new URL(url);
+
+            HttpURLConnection conn = (HttpURLConnection) wsUrl.openConnection();
+
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+
+            OutputStream os = conn.getOutputStream();
+            os.write(params.getBytes(Charset.forName("UTF-8")));
+
+            InputStream is = conn.getInputStream();
+
+            byte[] b = new byte[1024];
+            int len = 0;
+            StringBuffer buffer = new StringBuffer();
+            while ((len = is.read(b)) != -1) {
+                String ss = new String(b, 0, len, "UTF-8");
+                buffer.append(ss);
+            }
+            is.close();
+            os.close();
+
+            Map<String, List<String>> headerFields = conn.getHeaderFields();
+            for (Map.Entry<String, List<String>> entry : headerFields.entrySet()) {
+                String key = entry.getKey();
+                List<String> value = entry.getValue();
+                System.out.println("key : " + key);
+                for (String s : value) {
+                    System.out.println("value : " + s);
+                }
+                System.out.println();
+            }
+
+            String cookie = conn.getHeaderField("Set-Cookie");
+            System.out.println("cookie : " + cookie);
+
+            conn.disconnect();
+
+            String resultStr = buffer.toString();
+            System.out.println(resultStr);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }
