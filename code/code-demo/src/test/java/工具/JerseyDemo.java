@@ -13,7 +13,6 @@ public class JerseyDemo {
     @Test
     public void test1(){
 
-
         Client client = Client.create();
 
         WebResource resource = client.resource("http://www.baidu.com");
@@ -25,6 +24,21 @@ public class JerseyDemo {
 
         System.out.println(responseEntity);
 
+
+
     }
 
+
+    @Test
+    public void 节假日(){
+        Client client = Client.create();
+
+        WebResource resource = client.resource("http://tool.bitefu.net/jiari/?d=2020");
+
+        ClientResponse response = resource.type(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+
+        String responseEntity = response.getEntity(String.class);
+
+        System.out.println(responseEntity);
+    }
 }
