@@ -40,5 +40,7 @@ public class JerseyDemo {
         String responseEntity = response.getEntity(String.class);
 
         System.out.println(responseEntity);
+
+
     }
 }
