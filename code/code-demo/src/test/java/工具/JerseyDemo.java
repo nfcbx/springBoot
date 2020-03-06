@@ -5,6 +5,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import org.junit.Test;
 
+import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 
 public class JerseyDemo {
@@ -35,12 +36,16 @@ public class JerseyDemo {
 
         WebResource resource = client.resource("http://tool.bitefu.net/jiari/?d=2020");
 
-        ClientResponse response = resource.type(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+        Cookie cookie = Cookie.valueOf("");
+
+        ClientResponse response = resource
+                .cookie(cookie)
+                .type(MediaType.APPLICATION_JSON)
+                .get(ClientResponse.class);
 
         String responseEntity = response.getEntity(String.class);
 
         System.out.println(responseEntity);
-
 
     }
 }
