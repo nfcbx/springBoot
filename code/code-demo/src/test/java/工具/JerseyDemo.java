@@ -3,6 +3,7 @@ package 工具;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import io.netty.handler.ssl.ApplicationProtocolConfig;
 import org.junit.Test;
 
 import javax.ws.rs.core.Cookie;
@@ -24,7 +25,6 @@ public class JerseyDemo {
         String responseEntity = response.getEntity(String.class);
 
         System.out.println(responseEntity);
-
 
 
     }
