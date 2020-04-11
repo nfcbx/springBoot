@@ -5,6 +5,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisPool;
@@ -21,7 +23,9 @@ import java.util.concurrent.TimeUnit;
 
 public class RedisTest1 {
 
-    public ThreadPoolExecutor threadPool = new ThreadPoolExecutor(2, 2, 5L, TimeUnit.SECONDS, new LinkedBlockingQueue());
+    private static Logger logger = LoggerFactory.getLogger(RedisTest1.class);
+
+    public ThreadPoolExecutor threadPool = new ThreadPoolExecutor(8, 10, 5L, TimeUnit.SECONDS, new LinkedBlockingQueue());
     public Jedis client;
 
     @Before
@@ -50,6 +54,7 @@ public class RedisTest1 {
     public void test1() {
         String test = client.get("test");
         System.out.println(test);
+        logger.info("test log ");
     }
 
     @Test
@@ -75,40 +80,79 @@ public class RedisTest1 {
     @Test
     public void test4() throws InterruptedException {
         threadPool.execute(() -> {
-            producer();
+            try {
+                producer();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         });
-        TimeUnit.MILLISECONDS.sleep(1500L);
+//        TimeUnit.MILLISECONDS.sleep(1500L);
         threadPool.execute(() -> {
-            customer();
+            System.out.println("消费 111 启动");
+            new RedisTest1().customer("111");
         });
-        while (true) {
+        threadPool.execute(() -> {
+            System.out.println("消费 222 启动");
+            new RedisTest1().customer("222");
+        });
+        threadPool.execute(() -> {
+            System.out.println("消费 333 启动");
+            customer("333");
+        });
+        threadPool.execute(() -> {
+            System.out.println("消费 444 启动");
+            customer("444");
+        });
+        threadPool.execute(() -> {
+            System.out.println("消费 555 启动");
+            customer("555");
+        });
+
+        boolean flag = true;
+        while (flag) {
+            sleepThread(4);
+            String listflag = RedisClient.getClient().get("listflag");
+            if ("3".equals(listflag)) {
+                flag = false;
+            }
         }
+
+        client.del("listflag");
+        logger.info("全部结束");
     }
 
-    public void producer() {
-        for (int i = 0; i < 50; i++) {
-            System.out.println(i);
+    public void producer() throws InterruptedException {
+        client.set("listflag", "1"); // 标识，1：正在生产，2：生产完毕，3：消费完毕
+        for (int i = 0; i < 100; i++) {
+//            System.out.println(i);
             String num = String.valueOf(i);
             Long list = client.lpush("list", num);
             System.out.println("生产= " + num + " size= " + list);
-            sleepThread(1);
+//            sleepThread(1);
+            TimeUnit.MILLISECONDS.sleep(200L); // 1s create 5 个
         }
+        System.out.println("生产完成");
+        client.set("listflag", "2");
     }
 
-    public void customer() {
-        int i = 0;
-        while (i < 5) {
-//            sleepThread(1);
+    public void customer(String name) {
+        boolean flag = true;
+        while (flag) {
+            sleepThread(1);
 //            String list = client.rpop("list");
 //            List<String> list = client.brpop(50, "list");
-            List<String> list = RedisClient.getClient().brpop(5, "list");
+            List<String> list = RedisClient.getClient().brpop(2, "list"); // 等待2秒后再获取
             Long size = RedisClient.getClient().llen("list");
-            System.out.println("消费= " + JSON.toJSONString(list) + " size= " + size);
-//            if (size == 0) {
-//                sleepThread(1);
-//                i++;
-//            }
+            logger.info(name + " 消费= " + JSON.toJSONString(list) + " size= " + size);
+            if (size == 0) {
+                String listflag = RedisClient.getClient().get("listflag");
+                if ("2".equals(listflag) || "3".equals(listflag)) {
+                    flag = false;
+                    RedisClient.getClient().set("listflag", "3");
+                }
+            }
         }
+        System.out.println(name + " 消费结束");
     }
 
 
