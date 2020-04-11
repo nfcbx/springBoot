@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 
 public class RedisTest1 {
 
-    public ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(2, 4, 5L, TimeUnit.SECONDS, new LinkedBlockingQueue(100));
+    public ThreadPoolExecutor threadPool = new ThreadPoolExecutor(2, 2, 5L, TimeUnit.SECONDS, new LinkedBlockingQueue());
     public Jedis client;
 
     @Before
@@ -69,34 +69,38 @@ public class RedisTest1 {
     }
 
     @Test
-    public void test4() {
-        for (int i = 1; i <= 10; i++) {
-            producer(i);
-        }
-        customer();
-
+    public void test4() throws InterruptedException {
+        threadPool.execute(() -> {
+            producer();
+        });
+        TimeUnit.MILLISECONDS.sleep(500L);
+        threadPool.execute(() -> {
+            customer();
+        });
         while (true) {
         }
     }
 
-    public void producer(int i) {
-        System.out.println(i);
-        String num = String.valueOf(i);
-        CompletableFuture.runAsync(() -> {
+    public void producer() {
+        for (int i = 0; i < 50; i++) {
+            System.out.println(i);
+            String num = String.valueOf(i);
             Long list = client.lpush("list", num);
             System.out.println("生产= " + num + " size= " + list);
-            sleepThread();
-        });
+            sleepThread(1);
+        }
     }
 
     public void customer() {
-        while (true) {
-            sleepThread();
+        int i = 0;
+        while (i < 10) {
+            sleepThread(1);
             String list = client.rpop("list");
             Long size = client.llen("list");
             System.out.println("消费= " + list + " size= " + size);
             if (size == 0) {
-                sleepThread();
+                sleepThread(1);
+                i++;
             }
         }
     }
@@ -107,12 +111,16 @@ public class RedisTest1 {
         return i;
     }
 
-    public static void sleepThread() {
+    public static void sleepThread(Integer timeout) {
         try {
-            TimeUnit.SECONDS.sleep(getRandom());
+            TimeUnit.SECONDS.sleep(timeout);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void sleepThread() {
+        sleepThread(getRandom());
     }
 
 }
