@@ -10,8 +10,10 @@ import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisPool;
 import 多线程.CallableDemo1;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -127,4 +129,39 @@ public class RedisTest1 {
         sleepThread(getRandom());
     }
 
+
+    @Test
+    public void test22() {
+        CompletableFuture.runAsync(() -> {
+            _50w();
+        });
+        CompletableFuture.runAsync(() -> {
+            _50wpop();
+        });
+        while (true) {
+
+        }
+    }
+
+    @Test
+    public void _50w() {
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < 500000; i++) {
+//            client.lpush("biglist", UUID.randomUUID().toString());
+            client.lpush("biglist", String.valueOf(i));
+        }
+        long end = System.currentTimeMillis();
+        System.out.println("耗时：" + (end - start) / 1000);
+    }
+
+    @Test
+    public void _50wpop() {
+        while (true) {
+            String list = client.rpop("biglist");
+            System.out.println("消费= " + list);
+            if (list == null) {
+                sleepThread(1);
+            }
+        }
+    }
 }
