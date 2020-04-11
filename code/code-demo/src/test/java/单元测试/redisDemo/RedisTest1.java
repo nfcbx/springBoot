@@ -1,5 +1,6 @@
 package 单元测试.redisDemo;
 
+import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -9,6 +10,7 @@ import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisPool;
 import 多线程.CallableDemo1;
 
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -93,15 +95,17 @@ public class RedisTest1 {
 
     public void customer() {
         int i = 0;
-        while (i < 10) {
-            sleepThread(1);
-            String list = client.rpop("list");
+        while (i < 5) {
+//            sleepThread(1);
+//            String list = client.rpop("list");
+//            List<String> list = client.brpop(50, "list");
+            List<String> list = client.brpop(5, "list");
             Long size = client.llen("list");
-            System.out.println("消费= " + list + " size= " + size);
-            if (size == 0) {
-                sleepThread(1);
-                i++;
-            }
+            System.out.println("消费= " + JSON.toJSONString(list) + " size= " + size);
+//            if (size == 0) {
+//                sleepThread(1);
+//                i++;
+//            }
         }
     }
 
