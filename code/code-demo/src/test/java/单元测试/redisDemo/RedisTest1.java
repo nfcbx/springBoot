@@ -77,7 +77,7 @@ public class RedisTest1 {
         threadPool.execute(() -> {
             producer();
         });
-        TimeUnit.MILLISECONDS.sleep(500L);
+        TimeUnit.MILLISECONDS.sleep(1500L);
         threadPool.execute(() -> {
             customer();
         });
@@ -101,8 +101,8 @@ public class RedisTest1 {
 //            sleepThread(1);
 //            String list = client.rpop("list");
 //            List<String> list = client.brpop(50, "list");
-            List<String> list = client.brpop(5, "list");
-            Long size = client.llen("list");
+            List<String> list = RedisClient.getClient().brpop(5, "list");
+            Long size = RedisClient.getClient().llen("list");
             System.out.println("消费= " + JSON.toJSONString(list) + " size= " + size);
 //            if (size == 0) {
 //                sleepThread(1);
