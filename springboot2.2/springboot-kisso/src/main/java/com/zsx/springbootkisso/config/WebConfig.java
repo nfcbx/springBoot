@@ -10,10 +10,19 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
+    private static String[] urls = new String[]{
+            "/js/**", "/css/**", "/images/**",
+            "/",
+            "/index",
+            "/login",
+            "/register",
+            "/forget"
+    };
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new SSOSpringInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/", "/index", "/login");
+                .excludePathPatterns(urls);
     }
 }

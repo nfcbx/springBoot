@@ -1,68 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <title>登录</title>
+	<meta charset="utf-8">
+	<title>登录</title>
+	<link rel="stylesheet" href="css/style.css">
+	<style>
+		#err-msg {
+			display: none;
+		}
+	</style>
 </head>
 <body>
-
-<div>
-    <label>用户名</label>
-    <input id="usernameText"/>
+<div id="main">
+	<form action="" class="form">
+		<div class="form-head">
+			<h2>登录</h2>
+		</div>
+		<div class="form-body">
+			<p id="err-msg" class="err-msg">账号不存在</p>
+			<div class="ui-input">
+				<input class="abc" type="text" id="usernameText" placeholder="手机号或邮箱">
+			</div>
+			<div class="ui-input">
+				<input type="password" id="passwordText" placeholder="密码">
+			</div>
+			<p class="forget-password">
+				<a href="/forget">忘记密码？</a>
+			</p>
+			<button id="button" class="ui-button ui-button--primary">登录</button>
+		</div>
+		<div class="form-head">
+			<p>还没有账号？<a href="/register">立即注册</a></p>
+		</div>
+	</form>
 </div>
-<div>
-    <label>用户名</label>
-    <input type="password" id="passwordText"/>
-</div>
-<button id="button">登录</button>
-
 <script src="https://cdn.bootcss.com/jquery/2.2.2/jquery.min.js"></script>
+<script src="js/script.js"></script>
 <script>
+	$(document).keyup(function (e) {
+		if (e.keyCode == 13)
+			$("#button").trigger("click");
+	});
 
-    $(document).keyup(function (e) {
-        if (e.keyCode == 13)
-            $("#button").trigger("click");
-    });
+	$(function () {
 
-    $(function () {
+	});
 
-    });
+	$("#button").click(function() {
+		login();
+	});
 
-    $("#button").click(function() {
-        login();
-    });
+	var login = function(){
+		let username = $("#usernameText").val();
+		let password = $("#passwordText").val();
+		$.ajax({
+			type: "post",
+			url: "/login",
+			data: {
+				username: username,
+				password: password,
+				token: "token"
+			},
+			dataType: "json",
+			success: function (res) {
+				console.info(res)
+				if(res && res.success){
+					alert(res.message);
+					var returnURL = getQueryString("returnURL");
+					if(returnURL){
+						window.location.href = returnURL
+					}
+				}
+			}
+		})
+	}
 
-    var login = function(){
-        let username = $("#usernameText").val();
-        let password = $("#passwordText").val();
-        $.ajax({
-            type: "post",
-            url: "/login",
-            data: {
-                username: username,
-                password: password,
-                token: "token"
-            },
-            dataType: "json",
-            success: function (res) {
-                console.info(res)
-                if(res && res.success){
-                    alert(res.message);
-                    var returnURL = getQueryString("returnURL");
-                    if(returnURL){
-                        window.location.href = returnURL
-                    }
-                }
-            }
-        })
-    }
-
-    //根据参数名获取对应的url参数
-    function getQueryString(name) {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-        var r = window.location.search.substr(1).match(reg);
-        if (r != null) return unescape(r[2]); return null;
-    }
+	//根据参数名获取对应的url参数
+	function getQueryString(name) {
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+		var r = window.location.search.substr(1).match(reg);
+		if (r != null) return unescape(r[2]); return null;
+	}
 </script>
 </body>
 </html>

@@ -5,17 +5,13 @@ import com.baomidou.kisso.SSOHelper;
 import com.baomidou.kisso.security.token.SSOToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Map;
-import java.util.UUID;
 
 @Controller
 public class LoginController {
@@ -30,6 +26,8 @@ public class LoginController {
 //        model.addAttribute("name", UUID.randomUUID().toString());
         return "login";
     }
+
+
 
     // 授权登录
     @RequestMapping("/login")
@@ -76,6 +74,18 @@ public class LoginController {
     public String logout() {
         SSOHelper.clearLogin(request, response);
         return "Logout Kisso!";
+    }
+
+
+
+    @RequestMapping("/register")
+    public String register() {
+        return "register";
+    }
+
+    @RequestMapping("/forget")
+    public String forget() {
+        return "forget";
     }
 
 
