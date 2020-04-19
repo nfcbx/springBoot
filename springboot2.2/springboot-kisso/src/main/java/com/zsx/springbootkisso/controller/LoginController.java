@@ -5,9 +5,7 @@ import com.baomidou.kisso.SSOHelper;
 import com.baomidou.kisso.security.token.SSOToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,7 +28,7 @@ public class LoginController {
 
 
     // 授权登录
-    @RequestMapping("/login")
+    @PostMapping("/login")
     @ResponseBody
     public JSONObject login(
             @RequestParam(value = "username") String username,
@@ -56,7 +54,7 @@ public class LoginController {
 
     // 查看登录信息
     @ResponseBody
-    @RequestMapping("/token")
+    @GetMapping("/token")
     public String token() {
         String msg = "暂未登录";
         SSOToken ssoToken = SSOHelper.attrToken(request);
@@ -69,13 +67,12 @@ public class LoginController {
     }
 
     // 退出登录
-    @RequestMapping("/logout")
+    @GetMapping("/logout")
     @ResponseBody
     public String logout() {
         SSOHelper.clearLogin(request, response);
         return "Logout Kisso!";
     }
-
 
 
     @RequestMapping("/register")
