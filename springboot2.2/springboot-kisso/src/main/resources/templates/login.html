@@ -27,7 +27,7 @@
 			<p class="forget-password">
 				<a href="/forget">忘记密码？</a>
 			</p>
-			<button id="button" class="ui-button ui-button--primary">登录</button>
+			<button type="button" id="button" class="ui-button ui-button--primary">登录</button>
 		</div>
 		<div class="form-head">
 			<p>还没有账号？<a href="/register">立即注册</a></p>
@@ -35,7 +35,7 @@
 	</form>
 </div>
 <script src="https://cdn.bootcss.com/jquery/2.2.2/jquery.min.js"></script>
-<script src="js/script.js"></script>
+<!--<script src="js/script.js"></script>-->
 <script>
 	$(document).keyup(function (e) {
 		if (e.keyCode == 13)
@@ -68,7 +68,7 @@
 					console.log(res.message);
 					var returnURL = getQueryString("returnURL");
 					if(returnURL){
-						// window.location.href = returnURL
+						window.location.href = decodeURIComponent(returnURL)
 					}
 				}else{
 					alert(res.message);
