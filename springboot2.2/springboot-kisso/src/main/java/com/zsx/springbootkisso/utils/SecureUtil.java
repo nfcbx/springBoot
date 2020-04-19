@@ -4,7 +4,6 @@ import org.jasypt.util.text.BasicTextEncryptor;
 
 public class SecureUtil {
 
-
     private static final String password = "shuxue";
 
     /**

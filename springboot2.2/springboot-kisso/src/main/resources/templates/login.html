@@ -65,11 +65,13 @@
 			success: function (res) {
 				console.info(res)
 				if(res && res.success){
-					alert(res.message);
+					console.log(res.message);
 					var returnURL = getQueryString("returnURL");
 					if(returnURL){
-						window.location.href = returnURL
+						// window.location.href = returnURL
 					}
+				}else{
+					alert(res.message);
 				}
 			}
 		})
