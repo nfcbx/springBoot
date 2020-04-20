@@ -69,8 +69,12 @@ public class LoginController {
         }
 
         String returnURL = request.getParameter("ReturnURL");
+        String userId = user.getId().toString();
         // 设置登录 COOKIE
-        SSOHelper.setCookie(request, response, SSOToken.create().setIp(request).setId(1000).setIssuer("kisso"), false);
+        SSOToken ssoToken = SSOToken.create().setIp(request)
+                .setId(userId)
+                .setIssuer(username);
+        SSOHelper.setCookie(request, response, ssoToken, false);
 
         json.put("success", true);
         json.put("code", 200);
