@@ -14,9 +14,17 @@ public class WebConfig implements WebMvcConfigurer {
             "/js/**", "/css/**", "/images/**",
             "/",
             "/index",
+
+            "/validateCode", // 验证码
+
             "/login",
+
             "/register",
-            "/forget"
+            "/signup", // 注册
+
+            "/forget",
+
+            "/user/**" // http服务
     };
 
     @Override

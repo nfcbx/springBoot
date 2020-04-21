@@ -1,5 +1,7 @@
 package com.zsx.springbootkisso.controller;
 
+import cn.hutool.captcha.CaptchaUtil;
+import cn.hutool.captcha.LineCaptcha;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.kisso.SSOHelper;
 import com.baomidou.kisso.security.token.SSOToken;
@@ -10,8 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Map;
 
 @Controller
@@ -105,10 +111,84 @@ public class LoginController {
         return "Logout Kisso!";
     }
 
+    @GetMapping("/validateCode")
+    @ResponseBody
+    public void validateCode() {
+
+        LineCaptcha captcha = CaptchaUtil.createLineCaptcha(96, 36, 4, 10);
+//        CircleCaptcha captcha = CaptchaUtil.createCircleCaptcha(width, height);
+//        ShearCaptcha captcha = CaptchaUtil.createShearCaptcha(width, height);
+        String code = captcha.getCode();
+        System.out.println("生成的验证码：" + code);
+
+        HttpSession session = request.getSession();
+        session.setAttribute("validateCode", code);
+
+        BufferedImage image = captcha.getImage();
+        try {
+            ImageIO.write(image, "JPEG", response.getOutputStream());
+        } catch (IOException e) {
+//            logger.error("生成验证码图片出现异常，{}", e.getMessage(), e);
+            e.printStackTrace();
+        }
+    }
+
 
     @RequestMapping("/register")
     public String register() {
         return "register";
+    }
+
+    /**
+     * 注册
+     */
+    @PostMapping("/signup")
+    @ResponseBody
+    public JSONObject signup(
+            @RequestParam(value = "username") String username,
+            @RequestParam(value = "password") String password,
+            @RequestParam(value = "password2") String password2,
+            @RequestParam(value = "code") String code
+    ) {
+        JSONObject json = new JSONObject();
+        json.put("success", false);
+        json.put("code", 300);
+
+        if (StringUtils.isBlank(code)) {
+            json.put("message", "验证码不能为空");
+            return json;
+        }
+        code = code.trim();
+
+        String validateCode = request.getSession().getAttribute("validateCode").toString();
+
+        if (!validateCode.toUpperCase().equals(code.toUpperCase())) {
+            json.put("message", "验证码错误");
+            return json;
+        }
+
+        if (StringUtils.isBlank(username)) {
+            json.put("message", "用户名不能为空");
+            return json;
+        }
+        username = username.trim();
+
+        if (StringUtils.isBlank(password) || StringUtils.isBlank(password2)) {
+            json.put("message", "密码不能为空");
+            return json;
+        }
+
+        password = password.trim();
+        password2 = password2.trim();
+
+        if (!password.equals(password2)) {
+            json.put("message", "确认密码不一样，请检查后重试");
+            return json;
+        }
+
+        JSONObject jsonObject = userService.addUser(username, password);
+        json.putAll(jsonObject);
+        return json;
     }
 
     @RequestMapping("/forget")
@@ -116,5 +196,14 @@ public class LoginController {
         return "forget";
     }
 
+
+    @GetMapping("/user/{id}")
+    @ResponseBody
+    public String getUser(@PathVariable(value = "id") Integer id) {
+        if (id == null) {
+            return "";
+        }
+        return userService.getUser(id);
+    }
 
 }
