@@ -3,6 +3,7 @@ package com.zsx.springbootkisso.controller;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.kisso.SSOConfig;
 import com.baomidou.kisso.SSOHelper;
 import com.baomidou.kisso.security.token.SSOToken;
 import com.zsx.springbootkisso.entity.Tuser;
