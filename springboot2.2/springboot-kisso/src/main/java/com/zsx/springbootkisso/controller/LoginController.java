@@ -2,9 +2,13 @@ package com.zsx.springbootkisso.controller;
 
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.kisso.SSOConfig;
 import com.baomidou.kisso.SSOHelper;
+import com.baomidou.kisso.annotation.Action;
+import com.baomidou.kisso.annotation.Login;
+import com.baomidou.kisso.common.SSOConstants;
 import com.baomidou.kisso.security.token.SSOToken;
 import com.zsx.springbootkisso.entity.Tuser;
 import com.zsx.springbootkisso.service.UserService;
@@ -14,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -38,6 +43,7 @@ public class LoginController {
     }
 
 
+    @Login(action = Action.Skip)
     // 授权登录
     @PostMapping("/login")
     @ResponseBody
@@ -54,6 +60,7 @@ public class LoginController {
 //            System.out.println("key : " + entry.getKey());
 //            System.out.println("value : " + entry.getValue());
 //        }
+
 
         if (StringUtils.isBlank(username)) {
             json.put("message", "用户名不能为空");
@@ -81,7 +88,11 @@ public class LoginController {
         SSOToken ssoToken = SSOToken.create().setIp(request)
                 .setId(userId)
                 .setIssuer(username);
-        SSOHelper.setCookie(request, response, ssoToken, false);
+//        SSOHelper.setCookie(request, response, ssoToken, false);
+
+        request.setAttribute(SSOConstants.SSO_COOKIE_MAXAGE, -1);
+
+        SSOHelper.setCookie(request, response, ssoToken, true);
 
         json.put("success", true);
         json.put("code", 200);
@@ -94,13 +105,25 @@ public class LoginController {
     @ResponseBody
     @GetMapping("/token")
     public String token() {
+
+        Cookie[] cookies = request.getCookies();
+        System.out.println("打印Cookie：");
+        for (Cookie cookie : cookies) {
+            System.out.println(JSON.toJSONString(cookie));
+        }
+
         String msg = "暂未登录";
+
+
         SSOToken ssoToken = SSOHelper.attrToken(request);
         if (null != ssoToken) {
             msg = "登录信息 ip=" + ssoToken.getIp();
             msg += "， id=" + ssoToken.getId();
             msg += "， issuer=" + ssoToken.getIssuer();
         }
+
+
+
         return msg;
     }
 
