@@ -3,7 +3,6 @@ package EsDemo;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.zsx.config.EsSearchUtil;
-import jdk.management.resource.internal.inst.SocketOutputStreamRMHooks;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
 import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequest;
 import org.elasticsearch.action.admin.indices.mapping.put.PutMappingResponse;

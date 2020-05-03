@@ -7,7 +7,7 @@
     <groupId>com.zsx</groupId>
     <artifactId>code-demo</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <name>code-demo Maven Webapp</name>
     <!-- FIXME change it to the project's website -->
@@ -18,7 +18,6 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
-
 
     <dependencies>
 
@@ -270,8 +269,6 @@
         </dependency>
 
 
-
-
     </dependencies>
 
 
@@ -301,6 +298,21 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <useUniqueVersions>false</useUniqueVersions>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>com.zsx.runner.GetFile</mainClass>
+                        </manifest>
+                    </archive>
                 </configuration>
             </plugin>
         </plugins>
