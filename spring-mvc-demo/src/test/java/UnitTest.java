@@ -22,9 +22,16 @@ public class UnitTest {
     UserDao userDao;
 
     @Test
+    public void test2() {
+        testService.getDataFromMaster();
+        testService.getDataFromSlave();
+        testService.getDataFromMaster();
+    }
+
+    @Test
     public void test1() {
         List<User> users = userDao.selectAll();
-		System.out.println(8899);
+        System.out.println(8899);
         System.out.println(users);
     }
 

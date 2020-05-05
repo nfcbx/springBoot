@@ -13,6 +13,7 @@ public class DynamicDataSourceHolder {
      * @param key
      */
     public static void setDataSource(String key) {
+        System.out.println("指定数据源：" + key);
         dataSources.set(key);
     }
 
