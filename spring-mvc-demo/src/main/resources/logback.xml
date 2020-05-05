@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+
+    <property name="LOG_HOME" value="/data/Application/logs"/>
+
+    <!-- 控制台输出 -->
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date [%thread] %-5level %logger{80} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+<!--    <root level="INFO">-->
+    <root level="DEBUG">
+        <appender-ref ref="stdout"/>
+    </root>
+
+    <!--jdbc -->
+    <logger name="java.sql.Connection" level="INFO" />
+    <logger name="java.sql.PreparedStatement" level="INFO" />
+</configuration>
