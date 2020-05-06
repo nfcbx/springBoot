@@ -1,13 +1,10 @@
 package java8Stream;
 
 import com.google.common.collect.Lists;
-import com.sun.xml.internal.bind.v2.TODO;
-import org.apache.poi.ss.formula.functions.T;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.function.Predicate;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
