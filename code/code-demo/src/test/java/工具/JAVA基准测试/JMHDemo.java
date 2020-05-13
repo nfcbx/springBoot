@@ -10,6 +10,9 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 
+/**
+ * 官方文档：http://openjdk.java.net/projects/code-tools/jmh/
+ */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 
