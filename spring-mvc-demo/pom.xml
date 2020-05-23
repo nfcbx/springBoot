@@ -10,7 +10,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jdk.version>1.7</jdk.version>
+        <jdk.version>1.8</jdk.version>
         <!-- spring版本号 -->
         <spring.version>4.3.18.RELEASE</spring.version>
     </properties>
@@ -85,7 +85,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.16</version>
+            <version>1.2.68</version>
         </dependency>
 
 
