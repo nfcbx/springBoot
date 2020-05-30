@@ -1,6 +1,7 @@
 package lambda;
 
 import com.google.common.collect.Lists;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
@@ -15,8 +16,6 @@ public class Demo1026 {
 
     public static void main(String[] args) {
 
-        test2();
-
 //        for (int i = 9999979; i < 9999999; i++) {
 //            System.out.println(i&15);
 //        }
@@ -29,7 +28,8 @@ public class Demo1026 {
 
     }
 
-    public static void test2(){
+    @Test
+    public void test2(){
 
         System.out.println(Integer.MAX_VALUE); // 2147483647  二十一亿四千七百四十八万三千六百四十七
         System.out.println(Integer.MIN_VALUE); // -2147483648
