@@ -16,13 +16,7 @@ public class Demo1026 {
 
     public static void main(String[] args) {
 
-//        for (int i = 9999979; i < 9999999; i++) {
-//            System.out.println(i&15);
-//        }
 
-//        System.out.println(11&(16-1));
-//        System.out.println(12&(16-1));
-//        System.out.println(13&(16-1));
 
 
 
