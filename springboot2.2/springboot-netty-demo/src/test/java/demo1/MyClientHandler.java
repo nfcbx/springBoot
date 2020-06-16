@@ -17,6 +17,7 @@ public class MyClientHandler extends SimpleChannelInboundHandler<String> {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        // 通过这个触发通信
         ctx.writeAndFlush("客户端建立了连接");
     }
 
