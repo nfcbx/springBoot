@@ -9,10 +9,11 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 
 public class MyChatServerHandler extends SimpleChannelInboundHandler<String> {
 
-    private static ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
+    private static ChannelGroup channelGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, String s) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
+        Channel channel = ctx.channel();
 
 
     }
@@ -21,8 +22,32 @@ public class MyChatServerHandler extends SimpleChannelInboundHandler<String> {
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
         Channel channel = ctx.channel();
-        channel
 
+        channelGroup.writeAndFlush("【服务器】 - " + channel.remoteAddress() + " 加入\n");
+
+        // 将每个连接都放入ChannelGroup
+        channelGroup.add(channel);
+    }
+
+    // 连接断开
+    @Override
+    public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
+        //
+        Channel channel = ctx.channel();
+
+        channelGroup.writeAndFlush("【服务器】 - " + channel.remoteAddress() + " 离开\n");
+    }
+
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        Channel channel = ctx.channel();
+        System.out.println(channel.remoteAddress() + " 上线");
+    }
+
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        Channel channel = ctx.channel();
+        System.out.println(channel.remoteAddress() + " 下线");
     }
 
     @Override
