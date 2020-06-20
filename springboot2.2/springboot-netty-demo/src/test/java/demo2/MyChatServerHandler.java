@@ -15,6 +15,13 @@ public class MyChatServerHandler extends SimpleChannelInboundHandler<String> {
     protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
         Channel channel = ctx.channel();
 
+        channelGroup.forEach((ch) -> {
+            if (channel != ch) {
+                ch.writeAndFlush(channel.remoteAddress() + " 发送的消息： " + msg + " \n");
+            } else {
+                ch.writeAndFlush("【自己】 " + msg + "\n");
+            }
+        });
 
     }
 
