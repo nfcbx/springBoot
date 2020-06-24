@@ -1,4 +1,4 @@
-package com.zsx.springbootsso;
+package com.zsx.sso;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
