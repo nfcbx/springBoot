@@ -1,4 +1,4 @@
-package com.zsx.sso.user;
+package com.zsx.sso;
 
 import java.io.Serializable;
 

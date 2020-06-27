@@ -20,7 +20,6 @@ public class SsoWebFilter extends HttpServlet implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         logger.info("SsoWebFilter doFilter");
 
-
         chain.doFilter(request, response);
         return;
     }

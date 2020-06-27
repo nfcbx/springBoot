@@ -1,7 +1,7 @@
 package com.zsx.sso.helper;
 
-import com.zsx.sso.config.Config;
-import com.zsx.sso.user.SsoUser;
+import com.zsx.sso.Config;
+import com.zsx.sso.SsoUser;
 import com.zsx.sso.util.CookieUtil;
 
 import javax.servlet.http.HttpServletResponse;

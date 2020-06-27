@@ -1,4 +1,4 @@
-package com.zsx.sso.config;
+package com.zsx.sso;
 
 public class Config {
 
