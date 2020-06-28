@@ -1,0 +1,20 @@
+
+
+
+
+
+spring:
+  # 数据源
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/kisso?characterEncoding=utf8&useSSL=false
+    username: kisso
+    password: kisso
+
+  # jpa
+  jpa:
+    hibernate:
+      ddl-auto: update
+    # 显示sql
+    show-sql: true
+
