@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 
-public class SpinLock2 implements Lock {
+public class SimpleSpinLock implements Lock {
 
     private AtomicReference<Thread> cas = new AtomicReference<>();
     private int count = 0;

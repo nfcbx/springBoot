@@ -5,14 +5,14 @@ import org.joda.time.DateTime;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
-public class SpinLock2Test {
+public class SimpleSpinLockTest {
 
 
     private static Integer count = 0;
 
 
     public static void main(String[] args) {
-        SpinLock2 spinLock = new SpinLock2();
+        SimpleSpinLock spinLock = new SimpleSpinLock();
         System.out.println("开始");
         for (int i = 0; i < 10; i++) {
             final int num = i;
