@@ -1,4 +1,4 @@
-package 多线程.锁;
+package 多线程.自旋锁;
 
 import java.util.concurrent.atomic.AtomicReference;
 
