@@ -1,20 +1,18 @@
 package 多线程.锁;
 
 import org.joda.time.DateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
-public class SpinLockTest {
+public class SpinLock2Test {
 
 
     private static Integer count = 0;
 
 
     public static void main(String[] args) {
-        SpinLock spinLock = new SpinLock();
+        SpinLock2 spinLock = new SpinLock2();
         System.out.println("开始");
         for (int i = 0; i < 10; i++) {
             final int num = i;
