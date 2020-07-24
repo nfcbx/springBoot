@@ -10,7 +10,10 @@ import redis.clients.jedis.Jedis;
 import 单元测试.redisDemo.RedisClient;
 
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class LockTest2 {
@@ -27,28 +30,34 @@ public class LockTest2 {
         client.close();
     }
 
+    private static ExecutorService executorService = Executors.newCachedThreadPool();
+
+    private Random random = new Random();
 
     private static String key = "test-key";
+
+    private SpinLock spinLock = new SpinLock();
 
     @Test
     public void SpinLockTest() {
 
-        SpinLock spinLock = new SpinLock();
         System.out.println("开始");
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
             final int num = i;
-            CompletableFuture.runAsync(() -> {
-                spinLock.lock();
+//            CompletableFuture.runAsync(() -> {
+//                demo(num);
+//            });
 
-
-                String data = getData();
-                printTime(num + " : " + data);
-                if (StringUtils.isBlank(data)) {
-                    createData();
-                }
-
-                spinLock.unlock();
+            executorService.submit(() -> {
+                demo(num);
             });
+
+            try {
+                TimeUnit.MILLISECONDS.sleep(Long.parseLong(String.valueOf(random.nextInt(200))));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
         }
 
         System.out.println("结束");
@@ -61,15 +70,30 @@ public class LockTest2 {
 
     }
 
+    public String demo(Object object) {
+        spinLock.lock();
 
-    public String getData() {
-        String data = client.get(key);
-        System.out.println("从缓存中获取数据：" + data);
+        String data = getData();
+
+        printTime(object + " : " + data);
+        if (StringUtils.isBlank(data)) {
+            data = createData();
+        }
+
+        spinLock.unlock();
+
         return data;
     }
 
 
-    public void createData() {
+    public String getData() {
+        String data = client.get(key);
+//        System.out.println("从缓存中获取数据：" + data);
+        return data;
+    }
+
+
+    public String createData() {
         try {
             // 模拟网络耗时2s
             TimeUnit.SECONDS.sleep(2L);
@@ -77,6 +101,8 @@ public class LockTest2 {
         }
         client.set(key, "testData");
         client.expire(key, 5);
+
+        return "testData";
     }
 
 
@@ -100,6 +126,23 @@ public class LockTest2 {
 
     public static void printTime(Object object) {
 //        System.out.println(DateTime.now().toString() + " : " + object);
-        System.out.println("打印 " + DateTime.now().toString("HH:mm:ss:sss") + " : " + object);
+        DateTime now = DateTime.now();
+//        System.out.println("打印 " + now.toString("HH:mm:ss:sss") + " : " + object);
+        int minuteOfHour = now.getMinuteOfHour();
+        int secondOfMinute = now.getSecondOfMinute();
+        int millisOfSecond = now.getMillisOfSecond();
+
+        System.out.println("打印 " + minuteOfHour + ":" + secondOfMinute + ":" + millisOfSecond + "" + " : " + object);
+
+
+    }
+
+    @Test
+    public void test1() {
+
+        for (int i = 0; i < 100; i++) {
+            int num = random.nextInt(200);
+            System.out.println(num);
+        }
     }
 }

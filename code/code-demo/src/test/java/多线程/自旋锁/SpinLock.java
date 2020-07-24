@@ -13,7 +13,7 @@ public class SpinLock {
 
         while (!cas.compareAndSet(null, thread)) {
 //            System.out.println("自旋中。。。");
-            System.out.println("自旋次数：" + ++count);
+//            System.out.println("自旋次数：" + ++count);
         }
     }
 
