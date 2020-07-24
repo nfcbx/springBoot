@@ -10,7 +10,7 @@ public class SpinLock {
         Thread thread = Thread.currentThread();
 
         while (!cas.compareAndSet(null, thread)) {
-
+            System.out.println("自旋中。。。");
         }
     }
 

@@ -18,7 +18,7 @@ public class TicketLock implements Lock {
     public void lock() {
         myNum.set(ticketNum.getAndIncrement());
         while (serviceNum.get() != myNum.get()) {
-
+            System.out.println("自旋ing");
         }
     }
 
