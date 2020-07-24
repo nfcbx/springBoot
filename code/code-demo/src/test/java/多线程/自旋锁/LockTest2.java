@@ -20,6 +20,12 @@ public class LockTest2 {
 
     public Jedis client;
 
+    public LockTest2() {
+        if (client == null) {
+            client = RedisClient.getClient();
+        }
+    }
+
     @Before
     public void 开始() {
         client = RedisClient.getClient();
@@ -36,10 +42,14 @@ public class LockTest2 {
 
     private static String key = "test-key";
 
-    private SpinLock spinLock = new SpinLock();
+    private static SpinLock spinLock = new SpinLock();
 
     @Test
     public void SpinLockTest() {
+
+        Thread thread = Thread.currentThread();
+        String name = thread.getName();
+        printTime("ThreadName  :   " + name);
 
         System.out.println("开始");
         for (int i = 0; i < 100; i++) {
@@ -49,11 +59,11 @@ public class LockTest2 {
 //            });
 
             executorService.submit(() -> {
-                demo(num);
+                demo(name + " >>> " + num);
             });
 
             try {
-                TimeUnit.MILLISECONDS.sleep(Long.parseLong(String.valueOf(random.nextInt(200))));
+                TimeUnit.MILLISECONDS.sleep(Long.parseLong(String.valueOf(random.nextInt(300))));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -62,11 +72,11 @@ public class LockTest2 {
 
         System.out.println("结束");
 
-        try {
-            TimeUnit.SECONDS.sleep(5L);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            TimeUnit.SECONDS.sleep(5L);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
     }
 
@@ -75,10 +85,12 @@ public class LockTest2 {
 
         String data = getData();
 
-        printTime(object + " : " + data);
         if (StringUtils.isBlank(data)) {
+            printTime(object + " <> " + "重新获取数据");
             data = createData();
         }
+
+        printTime(object + " : " + data);
 
         spinLock.unlock();
 
@@ -100,7 +112,7 @@ public class LockTest2 {
         } catch (InterruptedException e) {
         }
         client.set(key, "testData");
-        client.expire(key, 5);
+        client.expire(key, 1);
 
         return "testData";
     }
@@ -132,7 +144,7 @@ public class LockTest2 {
         int secondOfMinute = now.getSecondOfMinute();
         int millisOfSecond = now.getMillisOfSecond();
 
-        System.out.println("打印 " + minuteOfHour + ":" + secondOfMinute + ":" + millisOfSecond + "" + " : " + object);
+        System.out.println(now.toString("HH:mm:ss:sss") + " 打印 " + minuteOfHour + ":" + secondOfMinute + ":" + millisOfSecond + "" + " : " + object);
 
 
     }
