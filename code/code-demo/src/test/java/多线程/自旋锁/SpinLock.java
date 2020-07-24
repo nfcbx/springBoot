@@ -6,11 +6,14 @@ public class SpinLock {
 
     private AtomicReference<Thread> cas = new AtomicReference<Thread>();
 
+    private static int count = 0;
+
     public void lock() {
         Thread thread = Thread.currentThread();
 
         while (!cas.compareAndSet(null, thread)) {
-            System.out.println("自旋中。。。");
+//            System.out.println("自旋中。。。");
+            System.out.println("自旋次数：" + ++count);
         }
     }
 

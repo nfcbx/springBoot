@@ -70,6 +70,11 @@ public class LockTest2 {
 
 
     public void createData() {
+        try {
+            // 模拟网络耗时2s
+            TimeUnit.SECONDS.sleep(2L);
+        } catch (InterruptedException e) {
+        }
         client.set(key, "testData");
         client.expire(key, 5);
     }
