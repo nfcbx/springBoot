@@ -40,6 +40,8 @@ public class LockTest3 {
     private SpinLock spinLock = new SpinLock();
 //    private static SpinLock spinLock = new SpinLock();
 
+    private static String dataCache = null;
+
     @Test
     public void SpinLockTest() {
 
@@ -108,30 +110,33 @@ public class LockTest3 {
         // 超时时间内继续获取锁
         while ((startTime + TIMEOUT) > System.currentTimeMillis()) {
 
-            String data1 = getData();
-            if (StringUtils.isNotBlank(data1)) {
+            String data1 = dataCache;
+            if (data1 != null) {
                 return data1;
             }
 
             if (redisLock.lock(key, name)) {
                 try {
-                    String data = createData();
+                    String data = createData(name);
+                    dataCache = data;
                     return data;
                 } finally {
                     redisLock.unlock(key, name);
+                    dataCache = null;
                 }
             }
         }
         return null;
     }
 
-    public String createData() {
+    public String createData(String name) {
         try {
             // 模拟网络耗时2s
             TimeUnit.SECONDS.sleep(1L);
         } catch (InterruptedException e) {
         }
-        client.set(dataKey, dataValue);
+//        client.set(dataKey, dataValue);
+        client.set(dataKey, name);
         client.expire(dataKey, 1);
 
         return dataValue;
