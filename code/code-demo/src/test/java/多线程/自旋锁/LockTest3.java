@@ -13,24 +13,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class LockTest2 {
+public class LockTest3 {
 
     public Jedis client;
 
-    public LockTest2() {
+    public LockTest3() {
         if (client == null) {
             client = RedisClient.getClient();
         }
-    }
-
-    @Before
-    public void 开始() {
-        client = RedisClient.getClient();
-    }
-
-    @After
-    public void 结束() {
-        client.close();
     }
 
     private static ExecutorService executorService = Executors.newCachedThreadPool();
@@ -39,7 +29,7 @@ public class LockTest2 {
 
     private static String key = "test-key";
 
-    private static SpinLock spinLock = new SpinLock();
+    private SpinLock spinLock = new SpinLock();
 
     @Test
     public void SpinLockTest() {

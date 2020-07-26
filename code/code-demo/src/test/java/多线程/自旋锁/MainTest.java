@@ -1,5 +1,7 @@
 package 多线程.自旋锁;
 
+import org.junit.Test;
+
 import java.util.concurrent.CompletableFuture;
 
 public class MainTest {
@@ -28,6 +30,30 @@ public class MainTest {
             lockTest3.SpinLockTest();
         });
 
+
+        try {
+            Thread.sleep(10000L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    @Test
+    public void main2() {
+
+        CompletableFuture.runAsync(() -> {
+            new LockTest3().SpinLockTest();
+        });
+
+        CompletableFuture.runAsync(() -> {
+            new LockTest3().SpinLockTest();
+        });
+
+        CompletableFuture.runAsync(() -> {
+            new LockTest3().SpinLockTest();
+        });
 
         try {
             Thread.sleep(10000L);
