@@ -99,7 +99,7 @@ public class LockTest3 {
 
     public String getData() {
         String data = client.get(dataKey);
-        System.out.println("从缓存中获取数据：" + data);
+//        System.out.println("从缓存中获取数据：" + data);
         return data;
     }
 
@@ -135,11 +135,13 @@ public class LockTest3 {
             TimeUnit.SECONDS.sleep(1L);
         } catch (InterruptedException e) {
         }
-//        client.set(dataKey, dataValue);
-        client.set(dataKey, name);
+//        String value = dataValue;
+        String value = name;
+
+        client.set(dataKey, value);
         client.expire(dataKey, 1);
 
-        return dataValue;
+        return value;
     }
 
 
