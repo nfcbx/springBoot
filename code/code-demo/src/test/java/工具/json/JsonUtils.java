@@ -1,6 +1,9 @@
 package 工具.json;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -21,15 +24,32 @@ public class JsonUtils {
 
     static {
         // 对象的所有字段全部列入
-        objectMapper.setSerializationInclusion(JsonSerialize.Inclusion.ALWAYS);
+        objectMapper.setSerializationInclusion(JsonInclude.Include.ALWAYS);
+
         // 取现默认转换timestamps形式
-        objectMapper.configure(SerializationConfig.Feature.WRITE_DATES_AS_TIMESTAMPS, false);
-        // 忽略空bean转json的错误
-        objectMapper.configure(SerializationConfig.Feature.FAIL_ON_EMPTY_BEANS, false);
+//        objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
+        // 忽略空bean转json的错误，允许序列化空的POJO类，否则会抛出异常
+//        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        objectMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+
         // 设置统一的日期格式
         objectMapper.setDateFormat(new SimpleDateFormat(STANDARD_FORMAT));
+
         // 忽略在json字符串中存在，但是在java对象中不存在对应属性的情况，防止错误。
-        objectMapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+//        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+
+        // 美化输出
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+        // 允许没有引号的字段名（非标准）
+//        objectMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
+        objectMapper.enable(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES);
+
+        // 允许单引号（非标准）
+        objectMapper.enable(JsonParser.Feature.ALLOW_SINGLE_QUOTES);
 
         LOGGER.info("");
     }
@@ -58,8 +78,6 @@ public class JsonUtils {
             return null;
         }
     }
-
-
 
 
 //    parseArray
