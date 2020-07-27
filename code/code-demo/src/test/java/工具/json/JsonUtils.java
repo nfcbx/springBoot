@@ -2,17 +2,19 @@ package 工具.json;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.formula.ptg.AttrPtg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class JsonUtils {
 
@@ -42,7 +44,7 @@ public class JsonUtils {
         objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
         // 美化输出
-        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+//        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 
         // 允许没有引号的字段名（非标准）
 //        objectMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
@@ -50,6 +52,13 @@ public class JsonUtils {
 
         // 允许单引号（非标准）
         objectMapper.enable(JsonParser.Feature.ALLOW_SINGLE_QUOTES);
+
+        // todo
+        objectMapper.disable(MapperFeature.DEFAULT_VIEW_INCLUSION);
+
+        // todo
+        objectMapper.findAndRegisterModules();
+
 
         LOGGER.info("");
     }
@@ -79,10 +88,60 @@ public class JsonUtils {
         }
     }
 
+    public static <T> List<T> parseArray(String str, Class<T> clazz) {
+        if (StringUtils.isBlank(str) || clazz == null) {
+            return null;
+        }
+        try {
+            return objectMapper.readValue(str, new TypeReference<List<T>>() {
+            });
+        } catch (IOException e) {
+            LOGGER.error("Jackson Parse String to Object error : {}", e.getMessage(), e);
+            return null;
+        }
+    }
+
 
 //    parseArray
 
+
     public static void main(String[] args) {
+        HashMap<Object, Object> data1 = Maps.newHashMap();
+        data1.put(1, 2);
+        data1.put(11, 22);
+
+
+        HashMap<Object, Object> data2 = Maps.newHashMap();
+        data2.put("a", "ceshi");
+        data2.put("b", new Date());
+
+        ArrayList<HashMap<Object, Object>> list = Lists.newArrayList(data1, data2);
+
+        String json = JsonUtils.toJSONString(data1);
+
+        System.out.println(json);
+
+
+        String jsons = JsonUtils.toJSONString(list);
+
+        System.out.println(jsons);
+
+        Map map = JsonUtils.parseObject(json, Map.class);
+
+        System.out.println(map);
+
+        List<Map> maps = JsonUtils.parseArray(jsons, Map.class);
+        System.out.println(maps);
+
+        Map map1 = maps.get(1);
+        System.out.println(map1);
+        System.out.println(map1.get("b"));
+        System.out.println(map1.get("b") instanceof Date);
+
+
+    }
+
+    public static void main2(String[] args) {
 
 
         ObjectMapper mapper = new ObjectMapper();
@@ -107,6 +166,8 @@ public class JsonUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
     }
 
 }
