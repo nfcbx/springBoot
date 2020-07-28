@@ -1,14 +1,15 @@
-package 工具.json;
+package toolTest.json;
 
+import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.ss.formula.ptg.AttrPtg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -76,33 +77,30 @@ public class JsonUtils {
         }
     }
 
-    public static <T> T parseObject(String str, Class<T> clazz) {
-        if (StringUtils.isBlank(str) || clazz == null) {
+    public static <T> T parseObject(String json, Class<T> clazz) {
+        if (StringUtils.isBlank(json) || clazz == null) {
             return null;
         }
         try {
-            return clazz.equals(String.class) ? (T) str : objectMapper.readValue(str, clazz);
+            return clazz.equals(String.class) ? (T) json : objectMapper.readValue(json, clazz);
         } catch (IOException e) {
             LOGGER.error("Jackson Parse String to Object error : {}", e.getMessage(), e);
             return null;
         }
     }
 
-    public static <T> List<T> parseArray(String str, Class<T> clazz) {
-        if (StringUtils.isBlank(str) || clazz == null) {
+    public static <T> List<T> parseArray(String text, Class<T> clazz) {
+        if (StringUtils.isBlank(text) || clazz == null) {
             return null;
         }
         try {
-            return objectMapper.readValue(str, new TypeReference<List<T>>() {
-            });
+            return objectMapper.readValue(text, objectMapper.getTypeFactory().constructCollectionType(List.class, clazz));
+//            return objectMapper.readValue(text, new TypeReference<List<T>>() {});
         } catch (IOException e) {
-            LOGGER.error("Jackson Parse String to Object error : {}", e.getMessage(), e);
+            LOGGER.error("Jackson Parse String to List error : {}", e.getMessage(), e);
             return null;
         }
     }
-
-
-//    parseArray
 
 
     public static void main(String[] args) {
@@ -139,36 +137,45 @@ public class JsonUtils {
         System.out.println(map1.get("b") instanceof Date);
 
 
+        UserVO userVO = new UserVO();
+        userVO.setId(100);
+        userVO.setName("zhao");
+        userVO.setAge(22);
+        userVO.setBirthday(new Date());
+        userVO.setSuccess(false);
+
+        jsons = JsonUtils.toJSONString(userVO);
+
+        System.out.println(jsons);
+
+        UserVO userVO1 = JsonUtils.parseObject(jsons, UserVO.class);
+
+        System.out.println(userVO1);
+        System.out.println(JSON.toJSONString(userVO1));
+
+
+        UserVO userVO2 = new UserVO();
+        userVO2.setId(99999);
+        userVO2.setName("shuxue");
+        userVO2.setAge(66);
+        userVO2.setBirthday(new Date());
+        userVO2.setSuccess(true);
+
+
+        ArrayList<UserVO> userVOS = Lists.newArrayList(userVO, userVO1, userVO2);
+
+
+        jsons = JsonUtils.toJSONString(userVOS);
+
+        System.out.println(jsons);
+
+        List<UserVO> userVOList = JsonUtils.parseArray(jsons, UserVO.class);
+
+        System.out.println(JSON.toJSONString(userVOList));
+
+
     }
 
-    public static void main2(String[] args) {
-
-
-        ObjectMapper mapper = new ObjectMapper();
-
-
-        HashMap<Object, Object> map = Maps.newHashMap();
-        map.put(1, 2);
-        map.put(2, 3);
-        map.put(3, 4);
-        String value = null;
-        try {
-            value = mapper.writeValueAsString(map);
-            System.out.println(value);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        try {
-            Map data = mapper.readValue(value, Map.class);
-            System.out.println(data);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-    }
 
 }
 

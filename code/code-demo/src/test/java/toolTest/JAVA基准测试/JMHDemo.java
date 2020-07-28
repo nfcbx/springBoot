@@ -1,4 +1,4 @@
-package 工具.JAVA基准测试;
+package toolTest.JAVA基准测试;
 
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.runner.Runner;
