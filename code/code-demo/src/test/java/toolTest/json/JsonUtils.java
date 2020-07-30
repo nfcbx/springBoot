@@ -1,6 +1,8 @@
 package toolTest.json;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -168,6 +170,10 @@ public class JsonUtils {
 
         ArrayList<UserVO> userVOS = Lists.newArrayList(userVO, userVO1, userVO2);
 
+        userVO2.setUsers(JSONArray.parseArray(JSON.toJSONString(userVOS), UserVO.class));
+
+        System.out.println("fastjson 打印");
+        System.out.println(JSON.toJSONString(userVOS));
 
         jsons = JsonUtils.toJSONString(userVOS);
 
