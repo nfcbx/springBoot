@@ -5,6 +5,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -183,6 +185,19 @@ public class JsonUtils {
 
         System.out.println(JSON.toJSONString(userVOList));
 
+
+        String str = "{\"aaaa\":false,\"bbbbb\":false,\"userAgent\":\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36\",\"num\":\"\",\"fp\":\"\",\"supportId\":\"0\"}";
+
+        try {
+            HashMap<String, Object> hashMap = objectMapper.readValue(str, new TypeReference<HashMap<String, Object>>() {
+            });
+            System.out.println(hashMap);
+            for (Map.Entry<String, Object> entry : hashMap.entrySet()) {
+                System.out.println(entry.getKey() + "  :  " + entry.getValue());
+            }
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
 
     }
 
