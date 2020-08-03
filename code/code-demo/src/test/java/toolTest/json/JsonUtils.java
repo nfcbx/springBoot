@@ -97,6 +97,18 @@ public class JsonUtils {
         }
     }
 
+    public static <T> T parseObjectByType(String json, TypeReference<T> typeReference) {
+        if (StringUtils.isBlank(json) || typeReference == null) {
+            return null;
+        }
+        try {
+            return objectMapper.readValue(json, typeReference);
+        } catch (IOException e) {
+            LOGGER.error("Jackson Parse String to Object error : {}", e.getMessage(), e);
+            return null;
+        }
+    }
+
     public static <T> List<T> parseArray(String text, Class<T> clazz) {
         if (StringUtils.isBlank(text) || clazz == null) {
             return null;
@@ -198,6 +210,10 @@ public class JsonUtils {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+
+        Map<String, String> stringStringMap = JsonUtils.parseObjectByType(str, new TypeReference<Map<String, String>>() {
+        });
+        System.out.println(stringStringMap);
 
     }
 
