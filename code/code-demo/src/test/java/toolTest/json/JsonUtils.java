@@ -211,7 +211,7 @@ public class JsonUtils {
             e.printStackTrace();
         }
 
-        Map<String, String> stringStringMap = JsonUtils.parseObjectByType(str, new TypeReference<Map<String, String>>() {
+        Map<String, String> stringStringMap = JsonUtils.parseObjectByType(str, new TypeReference<LinkedHashMap<String, String>>() {
         });
         System.out.println(stringStringMap);
 
