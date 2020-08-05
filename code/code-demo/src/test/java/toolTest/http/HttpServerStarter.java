@@ -13,6 +13,7 @@ public class HttpServerStarter {
 
         //创建一个HttpContext，将路径为/myserver请求映射到MyHttpHandler处理器
         httpServer.createContext("/myserver", new MyHttpHandler());
+        httpServer.createContext("/1", new HttpHandlerTest1());
 
         //设置服务器的线程池对象
         httpServer.setExecutor(Executors.newFixedThreadPool(10));
