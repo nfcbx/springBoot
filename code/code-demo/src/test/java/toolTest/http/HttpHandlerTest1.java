@@ -21,6 +21,7 @@ public class HttpHandlerTest1 implements HttpHandler {
 
         //设置响应头，必须在sendResponseHeaders方法之前设置！
 //        httpExchange.getResponseHeaders().add("Content-Type:", "text/html;charset=utf-8");
+//        httpExchange.getResponseHeaders().add("Content-Type:", "application/json; charset=utf-8");
 
         //设置响应码和响应体长度，必须在getResponseBody方法之前调用！
         httpExchange.sendResponseHeaders(200, responseContentByte.length);

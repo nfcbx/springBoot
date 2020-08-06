@@ -20,5 +20,6 @@ public class HttpServerStarter {
 
         //启动服务器
         httpServer.start();
+        System.out.println("服务器启动成功");
     }
 }
