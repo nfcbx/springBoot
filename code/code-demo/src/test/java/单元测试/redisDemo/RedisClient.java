@@ -26,10 +26,12 @@ public class RedisClient {
         JedisPoolConfig config = new JedisPoolConfig();
         config.setMaxIdle(100);
         config.setMaxTotal(1000);
-        config.setMaxWaitMillis(10*1000);
+        config.setMaxWaitMillis(10 * 1000);
         config.setTestOnBorrow(true);
 
-        return new JedisPool(config, "127.0.0.1", 6379).getResource();
+        Jedis resource = new JedisPool(config, "127.0.0.1", 6379).getResource();
+        System.out.println("redis 初始化成功");
+        return resource;
     }
 
 
