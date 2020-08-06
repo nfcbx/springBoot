@@ -4,27 +4,44 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import org.joda.time.LocalDateTime;
+import 多线程.自旋锁.LockTest4;
 
 import javax.ws.rs.core.MediaType;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class GetTest {
 
-    public static void main(String[] args) {
-        GetTest getTest = new GetTest();
+    private static ExecutorService executorService = Executors.newFixedThreadPool(6);
 
-        for (int i = 0; i < 100; i++) {
-            getTest.test();
+    public static void main(String[] args) throws InterruptedException {
+//        GetTest getTest = new GetTest();
+
+        for (int i = 0; i < 200; i++) {
+            int num = i;
+            CompletableFuture.runAsync(() -> {
+                new GetTest().test(num);
+            }, executorService);
 
         }
 
+//        Thread.sleep(10 * 1000L);
+
+        ConcurrentMap<String, Integer> dataMap = LockTest4.dataMap;
+        for (Map.Entry<String, Integer> entry : dataMap.entrySet()) {
+            System.out.println(entry.getKey() + " 次数： " + entry.getValue());
+        }
     }
 
 
-    public void test() {
+    public void test(Object object) {
         Client client = Client.create();
         long start = System.currentTimeMillis();
 //        System.out.println("开始" + LocalDateTime.now().toString());
-        WebResource resource = client.resource("http://localhost:8080/1");
+        WebResource resource = client.resource("http://localhost:8080/1?a=234&name=" + object);
 
         ClientResponse response = resource
                 .type(MediaType.APPLICATION_JSON_TYPE)
