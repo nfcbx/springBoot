@@ -1,7 +1,11 @@
 package hashMapTest;
 
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Test;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -10,6 +14,26 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author ZSX
  */
 public class CodeDemo {
+
+    //    @Test(invocationCount = 3, threadPoolSize = 2)  不好用，需要xml
+
+    @RepeatedTest(5)
+    public void test1() throws Exception {
+
+//        HashMap<String, String> map = new HashMap<>();
+        ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
+
+        for (int i = 0; i < 100; i++) {
+            final String str = "" + i;
+            CompletableFuture.runAsync(() -> {
+                map.put(str, str);
+            });
+        }
+
+        Thread.sleep(4 * 1000L);
+        System.out.println(map.size());
+
+    }
 
     public static void main(String[] args) {
         Map map = new HashMap();

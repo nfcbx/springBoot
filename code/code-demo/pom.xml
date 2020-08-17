@@ -79,9 +79,26 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>4.13</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- TestNG是Java中的一个测试框架， 类似于JUnit 和NUnit, 功能都差不多， 只是功能更加强大，使用也更方便 -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.3.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- junit 5 -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.6.2</version>
+            <scope>test</scope>
+        </dependency>
+
 
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
@@ -308,7 +325,6 @@
             <version>${jackson.version}</version>
         </dependency>
         <!-- Jackson Java 8 新功能 end -->
-
 
 
     </dependencies>
